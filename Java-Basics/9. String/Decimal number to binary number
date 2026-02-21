@@ -1,0 +1,26 @@
+Given a decimal number n (positive) in string format, compute its binary string equivalent and return it. 
+Note: Don't add a new line at the end.
+
+Examples:
+
+Input: n = 7
+Output: 111
+Input: n = 33
+Output: 100001
+
+// User function Template for Java
+class Solution {
+    public static String toBinary(int n) {
+        // Code here
+        StringBuilder s = new StringBuilder();
+        while(n>0){
+            if(n%2 == 1)
+                s.append('1');
+            else
+                s.append('0');
+            n = n/2;
+        }
+        s.reverse();
+        return s.toString();
+    }
+}

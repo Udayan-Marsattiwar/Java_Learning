@@ -1,0 +1,27 @@
+Design a class as described.
+
+class: Addition
+function: function name : add, parameters : a(int), b(int), return type: int
+access specifier: public, static: yes
+task: returns the sum of the values given in the parameter.
+
+Example: 
+
+Input: a = 3, b = 4
+Output: 7
+
+
+
+
+// create a class addition
+// with a static function add
+// this should return the sum of
+// two values(a,b) passed in the parameter
+
+// code here
+
+class Addition{
+    public static int add(int a, int b){
+        return a+b;
+    }
+}

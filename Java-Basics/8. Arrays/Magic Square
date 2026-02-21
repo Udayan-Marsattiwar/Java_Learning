@@ -1,0 +1,59 @@
+Given a n*n matrix mat[][] ,check whether the matrix is a magic square or not.
+
+A Magic Square is a n x n matrix of distinct elements from 1 to n2 where the sum of any row, column, or diagonal is always equal to the same number.
+
+Examples:
+
+Input: mat = [[2, 7, 6], [9, 5, 1], [4, 3, 8]]
+Output: "Magic Square"
+Explanation: R1->2+7+6=15, R2->9+5+1=15, R3->4+3+8=15
+             C1->2+9+4=15, C2->7+5+3=15, C3->6+1+8=15
+             D1->2+5+8=15, D2=6+5+4=15
+Input: mat = [[1, 2], [3, 4]]
+Output: "Not a Magic Square"
+Explanation: Sum of all rows and columns are not same.
+Input: mat = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+Output: "Not a Magic Square"
+Explanation: All sums are same but all elements from 1 to n2 are not present.
+Constraints:
+1  <=  mat.length  <= 1000
+
+import java.util.*;
+
+class MagicSquare {
+    static String isMagicSquare(int[][] mat) {
+        int n = mat.length;
+        boolean[] seen = new boolean[n*n + 1];
+        int target = 0, d1 = 0, d2 = 0;
+        int[] colSum = new int[n];
+
+        for (int j = 0; j < n; j++)
+            target += mat[0][j];
+
+        for (int i = 0; i < n; i++) {
+            int rowSum = 0;
+            for (int j = 0; j < n; j++) {
+                int val = mat[i][j];
+
+                if (val < 1 || val > n*n || seen[val])
+                    return "Not a Magic Square";
+
+                seen[val] = true;
+                rowSum += val;
+                colSum[j] += val;
+
+                if (i == j) d1 += val;
+                if (i + j == n - 1) d2 += val;
+            }
+            if (rowSum != target)
+                return "Not a Magic Square";
+        }
+
+        for (int sum : colSum)
+            if (sum != target)
+                return "Not a Magic Square";
+
+        return (d1 == target && d2 == target)
+                ? "Magic Square" : "Not a Magic Square";
+    }
+}

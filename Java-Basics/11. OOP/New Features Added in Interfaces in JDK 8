@@ -1,0 +1,65 @@
+There are certain features added to Interfaces in JDK 8 update mentioned below:
+
+1. Default Methods
+Interfaces can define methods with default implementations.
+Useful for adding new methods to interfaces without breaking existing implementations.
+
+interface TestInterface
+{
+    final int a = 10;
+    
+  	default void display() {
+        System.out.println("hello");
+    }
+}
+
+// A class that implements the interface.
+class TestClass implements TestInterface
+{
+    // Driver Code
+  	public static void main (String[] args) {
+        TestClass t = new TestClass();
+        t.display();
+    }
+}
+
+Output
+hello
+
+
+2. Static Methods
+Interfaces can now include static methods.
+These methods are called directly using the interface name and are not inherited by implementing classes.
+Another feature that was added in JDK 8 is that we can now define static methods in interfaces that can be called independently without an object. These methods are not inherited.
+
+interface TestInterface
+{
+    final int a = 10;
+    static void display()
+    {
+        System.out.println("hello");
+    }
+}
+
+// A class that implements the interface.
+class TestClass implements TestInterface
+{
+    // Driver Code
+    public static void main (String[] args)
+    {
+        TestInterface.display();
+    }
+}
+
+Output
+hello
+
+
+3. Functional Interface
+Functional interfaces can be used with lambda expressions or method references.
+The @FunctionalInterface annotation can be used to indicate that an interface is a functional interface, although it’s optional.
+
+@FunctionalInterface
+public interface Calculator {
+    int compute(int x, int y); // single abstract method
+}

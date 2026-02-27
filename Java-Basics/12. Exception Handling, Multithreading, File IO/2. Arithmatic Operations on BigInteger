@@ -1,0 +1,30 @@
+// Arithmatic operations on BigIneteger
+
+import java.math.BigInteger;
+class Main {
+    public static void main(String[] args) {
+        BigInteger a = new BigInteger("12345678910123654789");
+        BigInteger b = new BigInteger("01987654321963258741");
+        BigInteger c = a.add(b);
+        BigInteger d = a.subtract(b);
+        BigInteger e = a.multiply(b);
+        BigInteger f = a.divide(b);
+        BigInteger g = a.remainder(b);
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(d);
+        System.out.println(e);
+        System.out.println(f);
+        System.out.println(g);
+    }
+}
+
+O/P=
+12345678910123654789
+1987654321963258741
+14333333232086913530
+10358024588160396048
+24538942043277936209424157135370760649
+6
+419752978344102343

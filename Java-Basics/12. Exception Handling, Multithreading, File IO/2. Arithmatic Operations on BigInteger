@@ -3,8 +3,8 @@
 import java.math.BigInteger;
 class Main {
     public static void main(String[] args) {
-        BigInteger a = new BigInteger("12345678910123654789");
-        BigInteger b = new BigInteger("01987654321963258741");
+        BigInteger a = new BigInteger("500");
+        BigInteger b = new BigInteger("200");
         BigInteger c = a.add(b);
         BigInteger d = a.subtract(b);
         BigInteger e = a.multiply(b);
@@ -21,10 +21,10 @@ class Main {
 }
 
 O/P=
-12345678910123654789
-1987654321963258741
-14333333232086913530
-10358024588160396048
-24538942043277936209424157135370760649
-6
-419752978344102343
+500
+200
+700
+300
+100000
+2
+100

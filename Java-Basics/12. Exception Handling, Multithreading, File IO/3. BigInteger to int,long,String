@@ -1,0 +1,21 @@
+// Converting BigInteger to int, long, String.
+
+import java.math.BigInteger;
+class Main {
+    public static void main(String[] args) {
+        BigInteger a = new BigInteger("500");
+        int b = a.intValue();
+        long c = a.longValue();
+        String s = a.toString();
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(s);
+    }
+}
+
+O/P=
+500
+500
+500
+500

@@ -1,0 +1,52 @@
+Given a number n, find the n-th Fibonacci Number. Note that n may be large.
+
+Examples:
+
+Input: 100
+Output: 354224848179261915075
+
+Input: 500
+Output: 139423224561697880139724382870
+         407283950070256587697307264108962948325571622
+         863290691557658876222521294125 
+
+Fibonacci of a large number may contain more than 100 digits, which can be easily handled by BigInteger in Java. The BigInteger class is used for mathematical operation which involves very large integer calculations that are outside the limit of all available primitive data types.
+
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Fibonacci
+{
+    // Returns n-th Fibonacci number
+    static BigInteger fib(int n)
+    {
+        BigInteger a = BigInteger.valueOf(0);
+        BigInteger b = BigInteger.valueOf(1);
+        BigInteger c = BigInteger.valueOf(1);
+        for (int j=2 ; j<=n ; j++)
+        {
+            c =  a.add(b);
+            a = b;
+            b = c;
+        }
+
+        return (b);
+    }
+
+    public static void main(String[] args)
+    {
+        int n = 100;
+        System.out.println("Fibonacci of " + n +
+            "th term" + " " +"is" +" " + fib(n));
+    }
+}
+
+Output
+Fibonacci of 100th term is 354224848179261915075
+Explanation:
+
+The code declares Fibonacci variables using BigInteger instead of primitive types to handle very large numbers.
+Initial values are assigned using BigInteger.ZERO and BigInteger.ONE to start the Fibonacci sequence.
+Each new Fibonacci term is calculated using the add() method (e.g., c = a.add(b)), since arithmetic operators cannot be used with BigInteger.
+The loop updates the variables in each iteration, allowing the program to generate Fibonacci numbers with more than 100 digits without overflow.

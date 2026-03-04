@@ -1,0 +1,94 @@
+In Java, exceptions are a key part of error handling, providing a mechanism to manage runtime errors gracefully. The exception hierarchy allows developers to understand and utilize Java's exception-handling framework effectively. In this article, we will explore the hierarchy, the distinction between checked and unchecked exceptions, and provide examples for better understanding.
+
+exception_hierarchy_in_java
+Object and Throwable
+At the top of the Java exception hierarchy is the Object class, from which every class in Java inherits. Directly under Object is the Throwable class, which serves as the parent for all errors and exceptions in Java. This Throwable class is the superclass of the exceptions. It contains basic exception-related methods. For example, it contains the method printStackTrace. When you throw an exception from a code, and another code catches this exception, the catcher can print the stack trace.
+
+The Throwable class is divided into two primary categories:
+
+Error
+Exception
+Error:
+Errors represent serious problems that a reasonable application should not attempt to catch. These issues are typically related to the Java Virtual Machine (JVM) itself, such as running out of memory or other critical system resources.
+
+Common Examples:
+
+VirtualMachineError
+OutOfMemoryError
+StackOverflowError
+Errors are unchecked, meaning they do not need to be declared in the method signature or explicitly handled using try-catch blocks.
+
+Exception
+The Exceptions class is the root of the exceptions, they are the errors or exceptions, which are generated within the program that you write as a programmer. The Exception class is the base class for all exceptions that an application can reasonably handle. Exceptions are further divided into two categories:
+
+Checked exceptions
+Unchecked Exceptions
+Checked Exceptions
+These are exceptions that are checked at compile-time. If you are writing a code that might throw a checked exception, then you must write additional code for exception handling; otherwise, the Java compiler would not allow your code to compile. The compiler ensures that the programmer handles these exceptions by either using a try-catch block or declaring them in the method signature with the throws keyword.
+
+Common Checked Exceptions:
+
+IOException
+FileNotFoundException
+Example of a Checked Exception:
+
+
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+class GfG {
+    public static void main(String[] args) {
+        // Example for checked
+        Scanner scanner = new Scanner(new File("a.txt"));
+        // The above code will not compile if we do not add exception handling code
+        try {
+            scanner = new Scanner(new File("a.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+}
+
+
+In this example, the FileNotFoundException must be handled, or the code will not compile.
+
+Unchecked Exceptions
+Unchecked exceptions are not checked at compile-time, meaning the programmer is not forced to handle them. These exceptions usually indicate programming errors such as logic mistakes or improper use of an API.
+
+Common Unchecked Exceptions:
+
+ArithmeticException
+NullPointerException
+IndexOutOfBoundsException
+Examples of Unchecked Exceptions:
+
+Array Index Out of Bounds:
+class GfG {
+
+    public static void main(String[] args) {
+
+        int[] arr = new int[5];
+
+        arr[10] = 10;   // Throws IndexOutOfBoundsException
+
+    }
+
+}
+
+Division by Zero:
+class GfG {
+
+    public static void main(String[] args) {
+
+        int sum = 100;
+
+        int n = 0;
+
+        int arg = sum / n; // Throws ArithmeticException: / by zero
+
+    }
+
+}
+

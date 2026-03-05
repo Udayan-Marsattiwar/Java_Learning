@@ -1,0 +1,121 @@
+Method Call Stack in Exceptions
+
+
+The method call stack in Java manages method execution and exception handling by creating a stack frame for each method call. When an exception occurs, Java searches upward in the call stack for a matching catch block; otherwise, the program terminates. It helps to:
+
+Trace exception origin and understand exception propagation
+Debug runtime errors using stack trace information
+
+class Demo {
+    public static void main(String[] args) {
+        methodA();
+        System.out.println("End of main()");
+    }
+
+    static void methodA() {
+        methodB();
+    }
+
+    static void methodB() {
+        int a = 10, b = 0;
+        int c = a / b;   // ArithmeticException occurs here
+    }
+}
+Output:
+
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+at Demo.methodB(Main.java:13)
+at Demo.methodA(Main.java:8)
+at Demo.main(Main.java:3)
+
+Explanation:
+
+main() calls methodA(), which further calls methodB().
+methodB() throws an ArithmeticException due to division by zero.
+Since methodB() does not handle the exception, Java starts searching backward in the call stack for a matching catch block.
+call_stack
+Work flow of Method Call Stack in Exception
+How this Works?
+Referring to image above, Execution starts from main(), and each method call adds a new frame (methodB(), methodA()) to the call stack.
+When an exception occurs in methodA(), normal execution stops and the exception is thrown.
+Java performs stack unwinding, moving upward through the call stack to find a matching catch block.
+If a handler is found, the exception is handled and execution resumes; otherwise, the program terminates due to an unhandled exception.
+Example 1: Method Call Stack with Caught Exception
+
+
+
+
+class GfG {
+    public static void main(String[] args) {
+        try {
+            methodA();  // Calling methodA
+            System.out.println("Exit main()");
+        } catch (ArithmeticException ex) {
+            System.out.println("ArithmeticException caught...");
+            ex.printStackTrace();  // Prints stack trace for debugging
+        }
+    }
+​
+    public static void methodA() {
+        System.out.println("Enter methodA()");
+        try {
+            int a = 5, b = 0;
+            int c = a / b;  // Division by zero will throw ArithmeticException
+            System.out.println(c);
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException caught in methodA");
+        } finally {
+            System.out.println("finally-block runs regardless of the state of exception");
+        }
+        System.out.println("Exit methodA()");
+    }
+}
+
+Output
+Enter methodA()
+ArithmeticException caught in methodA
+finally-block runs regardless of the state of exception
+Exit methodA()
+Exit main()
+Explanation:
+
+The program starts execution from main(), which calls methodA() inside a try block.
+In methodA(), division by zero throws an ArithmeticException, which is caught within methodA() itself.
+The finally block in methodA() executes regardless of the exception and then the method completes execution.
+Control returns to main(), and since the exception was already handled, Exit main() is printed.
+Example 2: Uncaught Exception Propagation
+
+
+
+
+public class ExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            methodA();  // Calling methodA
+        } catch (ArithmeticException ex) {
+            System.out.println("ArithmeticException caught in main()");
+            ex.printStackTrace();
+        } finally {
+            System.out.println("finally in main() - executed after try-catch");
+        }
+    }
+​
+    public static void methodA() {
+        System.out.println("Enter methodA()");
+        int a = 5, b = 0;
+        int c = a / b;  // This will throw ArithmeticException
+        System.out.println(c);
+    }
+}
+Output:
+
+java.lang.ArithmeticException: / by zero
+at ExceptionDemo.methodA(ExceptionDemo.java:16)
+at ExceptionDemo.main(ExceptionDemo.java:4)
+
+Explanation:
+
+The program starts from main(), which calls methodA() inside a try block.
+In methodA(), division by zero causes an ArithmeticException, and since there is no try-catch, the exception is not handled there.
+The exception propagates back to main(), where it is caught by the catch block and the stack trace is printed.
+The finally block in main() executes after exception handling, ensuring cleanup before program termination.

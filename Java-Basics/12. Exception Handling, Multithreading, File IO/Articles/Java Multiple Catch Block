@@ -1,0 +1,94 @@
+In Java, exception handling allows a program to deal with runtime errors gracefully. Sometimes, a single try block can throw different types of exceptions, and Java provides two ways to handle such scenarios:
+
+Using multiple catch blocks (Java 6 and earlier)
+Using a single catch block to handle multiple exceptions (Java 7 and later)
+Example: Handling Multiple Exceptions
+
+public class GFG {
+    public static void main(String[] args){
+        
+        try{
+
+            // ArithmeticException
+            int a = 10 / 0;
+            int arr[] = new int[5];
+
+            // ArrayIndexOutOfBoundsException
+            arr[10] = 50;
+        }
+        catch (ArithmeticException e) {
+            System.out.println(
+                "Arithmetic Exception occurred");
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(
+                "Array Index Out Of Bounds Exception occurred");
+        }
+        catch (Exception e) {
+            System.out.println(
+                "General Exception occurred");
+        }
+    }
+}
+
+Output
+Arithmetic Exception occurred
+Syntax
+try {
+    // code that may throw exceptions
+    } catch (ExceptionType1 | ExceptionType2 ex) {
+   // exception handling code
+}
+
+Parameters: "ex" -> Exception object
+
+Return Type: catch block does not return any value
+
+Multiple Catch Block in Java
+Starting from Java 7, Java introduced the multi-catch feature, allowing a single catch block to handle multiple exception types using the pipe (|) operator. This enhancement:
+
+Syntax:
+
+Note: The exception parameter ex is implicitly final in a multi-catch block.
+
+Flow Chart of Java Multiple Catch Block
+
+
+public class MultiCatchExample {
+    public static void main(String[] args) {
+        try {
+            int a = Integer.parseInt("ABC"); // NumberFormatException
+            int b = 10 / 0;                  // ArithmeticException
+        } catch (NumberFormatException | ArithmeticException ex) {
+            System.out.println("Exception caught: " + ex);
+        }
+    }
+}
+
+Output
+Exception caught: java.lang.NumberFormatException: For input string: "ABC"
+Explanation:
+
+Either NumberFormatException or ArithmeticException can occur
+Both are handled using a single catch block
+Important Points:  
+Multi-catch is allowed only from Java 7 onwards.
+All exception types must be separated using the pipe symbol |.
+Parent and child exceptions cannot be combined in a multi-catch block.
+Invalid Example:
+
+try {
+
+    int num = Integer.parseInt("XYZ");
+
+} catch (NumberFormatException | Exception ex) {
+
+    System.out.println(ex);
+
+}
+
+Explanation:
+
+Exception is the parent class of NumberFormatException
+Catching both causes redundancy, as the parent already handles the child
+Java compiler throws an error

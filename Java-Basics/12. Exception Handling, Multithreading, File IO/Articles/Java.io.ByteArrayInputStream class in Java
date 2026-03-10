@@ -1,0 +1,146 @@
+ByteArrayInputStream class of java.io package contains all the buffers, containing bytes to be read from the Input Stream. There is no IO exception in case of ByteArrayInputStream class methods. Methods of this class can be called even after closing the Stream, there is no effect of it on the class methods. The class view is as follows: 
+
+--> java.io Package
+    --> ByteArrayInputStream Class   
+Syntax: 
+
+public class ByteArrayInputStream
+extends InputStream
+There are certain Fields:
+
+protected byte[] buf: An array of bytes that was provided by the creator of the stream.
+protected int count: The index one is greater than the last valid character in the input stream buffer.
+protected int mark: The currently marked position in the stream.
+protected int pos: This is the index of the next character to read from the input stream buffer.
+Constructor of ByteArrayInputStream Class
+Constructor	Action Performed
+ByteArrayInputStream(byte[] buffer) 	It creates ByteArrayInputStream to use buffer array - "buffer".
+ByteArrayInputStream(byte[] buf, int offset, int length) 	It creates ByteArrayInputStream that uses some part of "buffer" i.e. buffer array
+Methods of ByteArrayInputStream class
+Method 	Action Performed
+available()	It tells the total number of bytes from the input stream to be read.
+close()	It closes the input stream and releases system resources.
+mark()	It marks the current position of the input stream which means setting the read limit. 
+markSupported()	It tests if this input stream supports the mark and reset method.
+read()	It reads the next byte of data from the input stream.
+reset()	It repositions the input stream to the marked position and is called the mark() method 
+skip()	Skips the "args" in the input stream.
+Implementation:
+
+
+// Java Program to Demonstrate ByteArrayInputStream Class
+// Via mark(), read(), skip(), available(),
+// markSupported(), close(), reset() Method
+​
+// Importing required classes
+import java.io.*;
+​
+// Main class
+public class GFG {
+​
+    // Main driver method
+    public static void main(String[] args) throws Exception
+    {
+​
+        // Declaring and initializing byte array
+        byte[] buffer = { 71, 69, 69, 75, 83 };
+        ByteArrayInputStream geek = null;
+​
+        // Try block to check for exceptions
+        try {
+            geek = new ByteArrayInputStream(buffer);
+​
+            // Telling the no. of bytes to be read
+            // using available() method
+            int number = geek.available();
+            System.out.println(
+                "Use of available() method : " + number);
+​
+            // Reading and printing Characters one by one
+            // using read() method
+            System.out.println("\nChar : "
+                               + (char)geek.read());
+            System.out.println("Char : "
+                               + (char)geek.read());
+            System.out.println("Char : "
+                               + (char)geek.read());
+​
+            // Usage of mark() method
+            geek.mark(0);
+​
+            // Skipping 'k' from "GEEKS"
+            // using skip() method
+            geek.skip(1);
+            System.out.println(
+                "skip() method comes to play");
+            System.out.println(
+                "mark() method comes to play");
+            System.out.println("Char : "
+                               + (char)geek.read());
+​
+            // Usage of markSupported() method
+            boolean check = geek.markSupported();
+            System.out.println("\nmarkSupported() : "
+                               + check);
+​
+            if (geek.markSupported()) {
+​
+                // Repositioning the stream to marked
+                // positions using reset() method
+                geek.reset();
+​
+                System.out.println("\nreset() invoked");
+                System.out.println("Char : "
+                                   + (char)geek.read());
+                System.out.println("Char : "
+                                   + (char)geek.read());
+            }
+            else {
+                System.out.println(
+                    "reset() method not supported.");
+            }
+​
+            System.out.println(
+                "geek.markSupported() supported reset() : "
+                + check);
+        }
+​
+        // Catch block to handle the exceptions
+        catch (Exception except) {
+​
+            // Displaying the exception along with line
+            // number using printStackTrace() method
+            except.printStackTrace();
+        }
+​
+        // finally block that execute for sure
+        finally {
+​
+            // Releasing the resources back to GC when
+            // closes
+            if (geek != null) {
+​
+                // Closing the file and releasing resources
+                // using close() method
+                geek.close();
+            }
+        }
+    }
+}
+
+Output
+Use of available() method : 5
+
+Char : G
+Char : E
+Char : E
+skip() method comes to play
+mark() method comes to play
+Char : S
+
+markSupported() : true
+
+reset() invoked
+Char : K
+Char : S
+geek.markSupported() supported reset() : true

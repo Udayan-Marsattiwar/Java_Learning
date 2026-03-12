@@ -1,0 +1,107 @@
+Java Collection Framework (JCF) is a set of classes and interfaces that provide ready-made data structures to store and manipulate groups of objects efficiently.
+
+Java provides collection interfaces like List, Set, Map, and Queue, with ready-made classes such as ArrayList, HashSet, HashMap, and PriorityQueue, so you don’t have to write data-handling code from scratch.
+The Collection Framework improves productivity by making code more reusable, maintainable and faster to develop.
+
+Example: This demonstrates how to create, add elements to, and iterate over an ArrayList using the Java Collections Framework.
+
+import java.util.*;  
+public class Geeks {
+    public static void main(String[] args) {
+        
+        // Creating a List of Strings using ArrayList (dynamic array)
+        List<String> list = new ArrayList<>();
+        
+        // Adding elements to the ArrayList
+        list.add("Java");
+        list.add("Python");
+        list.add("C++");
+        System.out.println("Programming Languages:");
+        
+        // Enhanced for-loop to iterate through the list
+        for (String lang : list) {
+            System.out.println(lang);
+        }
+    }
+}
+
+Output
+Programming Languages:
+Java
+Python
+C++
+
+Explanation
+Imports the java.util package to use collection classes like List and ArrayList.
+Creates a List<String> using ArrayList to store programming language names dynamically.
+Adds elements (Java, Python, C++) to the list using the add() method.
+Uses an enhanced for-loop to iterate through the list and print each element.
+
+Core Interfaces
+The foundation of the Collections Framework is built on interfaces like Collection, List, Set, Queue, Deque and Map.They define the behavior of different collection types and serve as a blueprint for implementations.
+
+Iterable Interface
+The Iterable interface is the topmost interface in the Collections Framework hierarchy. It enables objects to be traversed one by one using the enhanced for-loop.
+Package: java.lang
+Key method: Iterator<T> iterator();
+
+Any class that implements Iterable can be iterated using a for-each loop.
+Hierarchy
+
+Iterable
+    ↑
+Collection
+
+The Collection interface extends Iterable, which is why all standard collections can be iterated easily
+
+Collection Interface
+The Collection interface is the root interface of the Collections Framework (except Map). It represents a group of objects known as elements.
+Package: java.util
+Common methods: add(), remove(), size(), isEmpty(), iterator()
+It provides basic operations common to all collections.
+
+List
+The List interface provides an ordered collection that allows duplicates. Here are its common implementations:
+ArrayList: Implements a dynamically resizing array. It provides fast random access but can be slow for insertions and deletions in the middle.
+LinkedList: Implements a doubly-linked list. It allows for fast insertions and deletions but provides slower access compared to ArrayList.
+Vector: A thread-safe, dynamic array implementation. It is a legacy class and is generally not recommended for new projects. Instead, use ArrayList.
+Stack: Implements the stack data structure following the Last-In-First-Out (LIFO) principle. This is also a legacy class, and ArrayDeque is recommended for stack operations in modern applications.
+Vector and Stack methods are synchronized to support multi-threading. This prevents concurrent modification issues but adds overhead. If your application is single-threaded, using ArrayList (or ArrayDeque for stack operations) is faster and more efficient.
+
+Set
+A set is a collection that doesn't allow duplicate elements. The Set interface has the following common implementations:
+HashSet: Implements the set interface using a hash table. It does not guarantee the order of elements but offers fast lookups and insertions.
+TreeSet: Implements a set that is sorted based on natural ordering or a comparator. It uses a self-balancing binary tree (like a red-black tree).
+LinkedHashSet: Implements a set that maintains the order of insertion using a doubly linked list while still offering fast lookups like HashSet.
+
+Queue
+A queue follows the First-In-First-Out (FIFO) principle. Common implementations include:
+LinkedList: In addition to being a List, LinkedList implements the Queue interface, making it suitable for FIFO operations.
+ArrayDeque: A resizable array that implements both the Queue and Deque interfaces. It allows efficient insertion and removal from both ends.
+PriorityQueue: Implements a priority queue that processes elements based on their priority (not strictly FIFO). It uses a priority heap to order elements.
+
+Deque
+A deque java (double-ended queue) allows adding and removing elements from both ends. It is an extension of the Queue interface:
+LinkedList: Implements a Deque as well as a List, allowing operations at both ends.
+ArrayDeque: A resizable array implementation of the Deque interface, offering better performance compared to LinkedList in most cases.
+
+Map
+A Map java stores key-value pairs, where each key maps to exactly one value. Common Map implementations include:
+HashMap: Implements the Map interface using hashing. It provides fast access to values based on keys but does not maintain the order of insertion.
+TreeMap: Implements the Map interface using a self-balancing binary tree. It maintains the keys in a sorted order.
+LinkedHashMap: Similar to HashMap, but it maintains the insertion order of the keys.
+
+Collections Class (Implementations of Basic Algorithms)
+The Collections class is a utility class that provides several useful algorithms to manipulate collections, including sorting, searching, and finding maximum or minimum elements. Here are some key methods in the Collections class:
+binarySearch(List<?> list, T key): Performs a binary search on a sorted list to find the position of a specified element.
+sort(List<T> list): Sorts the elements of the list in their natural order or based on a comparator.
+max(Collection<? extends T> coll): Returns the maximum element in a collection according to the natural ordering of its elements.
+min(Collection<? extends T> coll): Returns the minimum element in a collection according to the natural ordering of its elements.
+reverse(List<?> list): Reverses the order of the elements in a list.
+fill(List<? super T> list, T obj): Replaces all elements in a list with the specified element.
+
+Advantages of the Java Collections Framework
+Reduces Programming Effort: The framework provides pre-built, high-performance data structures, allowing developers to focus on the business logic instead of re-implementing basic data structures and algorithms.
+Increases Performance: By using optimized implementations of common data structures, the collection framework ensures better performance and scalability for most applications.
+Consistent API: The Collection and Map interfaces offer a uniform API for all collection classes, making it easier to work with different types of collections. The ability to sort and search collections efficiently helps in solving problems more effectively.
+Improved Code Quality: Since the collection classes are well-tested and optimized, they improve the quality of your code by minimizing bugs related to data structures.

@@ -1,0 +1,52 @@
+The Java Collection Framework (java.util package) provides interfaces and classes for handling groups of objects efficiently. It includes Iterable, Collection, and Map, forming the backbone of Java's data structures. Below is a detailed explanation based on the hierarchy shown in the image.
+
+1. Iterable Interface
+The Iterable interface is the root of the collection hierarchy. It provides an iterator() method to iterate through collections. Since Collection extends Iterable, all collection classes support iteration.
+iterator(): Returns an iterator to traverse the elements.
+Iterator  iterator();
+forEach(action): Performs the given action for each element of the collection.
+
+2. Collection Interface
+The Collection interface extends Iterable and serves as the root interface for all collection types (except Map). It provides essential methods for adding, removing, and managing elements.
+add(element), remove(element), clear(), size(), etc.
+Implemented by List, Queue, and Set interfaces.
+
+3. List Interface
+The List interface extends Collection and allows ordered storage of elements with index-based access.
+Implementations:
+ArrayList: Provides a dynamic array that grows automatically.
+LinkedList: Implements a doubly linked list.
+Vector: Similar to ArrayList but synchronized (legacy class).
+Stack: A LIFO (Last In, First Out) data structure extending Vector.
+
+4. Queue Interface
+The Queue interface follows the FIFO (First In, First Out) principle and provides additional methods like offer(), poll(), and peek().
+Implementations:
+PriorityQueue: Implements a priority heap, where elements are dequeued based on priority.
+Deque Interface: Extends Queue, allowing insertion and removal from both ends.
+LinkedList: Implements Deque in a linked list form.
+ArrayDeque: Implements Deque using a resizable array.
+
+5. Set Interface
+The Set interface represents an unordered collection that does not allow duplicates.
+Implementations:
+HashSet: Uses hashing to store unique elements (unordered).
+LinkedHashSet: Maintains insertion order while using hashing.
+SortedSet Interface (Extends Set)
+TreeSet: Implements a self-balancing tree (Red-Black Tree) for sorted elements.
+
+6. Map Interface
+Unlike Collection, the Map interface represents a key-value pair structure.
+Implementations:
+HashMap: Uses hashing to store key-value pairs (unordered).
+LinkedHashMap: Maintains insertion order.
+SortedMap Interface (Extends Map)
+TreeMap: Stores key-value pairs in sorted order using a self-balancing tree.
+
+7. Collections Class
+The Collections class is a utility class in java.util that provides various static methods to operate on collections.
+Methods:
+sort(List): Sorts a list.
+reverse(List): Reverses a list.
+shuffle(List): Randomly shuffles elements.
+binarySearch(List, key): Searches an element using binary search.

@@ -1,0 +1,98 @@
+Java is one of the most popular and widely used programming languages and platforms. In this article, we will learn how to write a simple Java Program. This article will guide you on how to write, compile and run your first Java program. With the help of Java, we can develop web and mobile applications.
+
+-> Prerequisites
+1. Download install JDK.
+2. Download install intelliJ
+
+->Implementation of Java Hello World
+The below-given program is the most simple program of Java printing "Hello World" to the screen. Let us try to understand every bit of code step by step.
+public class HelloWorld {
+    
+    // Your program begins with a call to main()
+    public static void main(String[] args)
+    {
+        // Prints "Hello, World" to the terminal window.
+        System.out.println("Hello, World");
+    }
+}
+
+Output
+Hello, World
+
+-> Understanding the Java Hello World Program
+1. Class Definition
+Every Java program must have at least one class. Here, the class is defined using the class keyword:
+public class HelloWorld {
+    // Statements go here
+}
+Note:
+If the class is public, the filename must match the class name HelloWorld.java
+
+2. main Method
+In the Java programming language, every application must contain a main method as it is the entry point of the application:
+public static void main(String[] args)
+
+a. public: Allows JVM to access the method from anywhere.
+b. static: Method can run without creating an object.
+c. void: It doesn’t return any value.
+d. String[] args: Accepts command-line arguments.
+
+3. System.out.println()
+This prints output to the console.
+System.out.println("Hello, World");
+1. System: Built-in class from java.lang package.
+2. out: Static member (PrintStream object) of System.
+3. println(): Method that prints to console and moves to the next line.
+
+-> Steps to Implement a Java Program
+Java is a platform-independent language that follows a two-step execution process:
+Compilation (source code -> bytecode)
+Execution (bytecode -> machine code via JVM)
+
+1. Compilation in Java
+Java source code (.java files) is compiled by the Java Compiler (javac) into Bytecode, stored in .class files. This bytecode is platform-independent and ready to run on any system with a JVM.
+a. Internally, compilation involves:
+b. Parsing: Converts code into syntax trees (AST).
+c. Entering: Populates symbol tables.
+d. Annotation Processing: Handles annotations.
+e. Attribution: Performs type checking and name resolution.
+f. Flow Analysis: Checks for variable use and reachability.
+g. Desugaring: Removes syntactic shortcuts.
+h. Generation: Produces .class files.
+
+2. Execution via JVM
+The .class files are executed by the Java Virtual Machine (JVM), which includes the following stages:
+2.1 Class Loader
+Loads the main class and other dependencies into memory.
+a. Primordial Loader: Default system loader.
+b. Non-primordial Loader: Custom loaders for advanced control.
+Class r = loadClass(String className, boolean resolveIt);
+
+2.2 Bytecode Verifier
+Checks that the loaded bytecode is safe to execute. It ensures:
+a. Variables are initialized
+b. Method signatures are correct
+c. Private access rules aren’t violated
+d. No stack overflows
+
+2.3 Just-In-Time (JIT) Compiler
+Converts bytecode into native machine code at runtime for faster execution.
+
+-> Java Compilation and Execution Example
+class HelloWorld{
+    public static void main(String[] args) {
+        System.out.print("Hello, World");
+    }
+}
+
+-> Steps to Run
+1. Create File: Save the file as HelloWorld.java.
+2. Open Terminal: Navigate to the folder containing the file.
+3. Compile:
+   javac HelloWorld.java 
+4. Run:
+   java HelloWorld
+Output
+   Hello, World
+
+Note: If you get ClassNotFoundException, ensure the .class file is in the correct directory or check your CLASSPATH.

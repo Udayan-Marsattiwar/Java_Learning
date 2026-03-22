@@ -1,0 +1,80 @@
+ArrayList is a resizable array implementation in Java. ArrayList grows dynamically and ensures that there is always a space to add elements.
+a. The backing data structure of ArrayList is an array of Object classes.
+b. ArrayList class in Java has 3 constructors.
+c. It has its own version of readObject and writeObject methods.
+d. Object Array in ArrayList is transient. It implements RandomAccess, Cloneable, and java.io.Serializable (which are Marker Interface in Java)
+
+-> How ArrayList Works Internally
+Internally, ArrayList uses a normal array to store elements
+          Object[] elementData
+The difference is that ArrayList automatically manages the size of this internal array
+Example:
+import java.util.ArrayList;
+​public class GFG{
+​    public static void main(String[] args) {
+​        ArrayList<Integer> list = new ArrayList<>();
+​        // Adding elements to ArrayList
+        for (int i = 1; i <= 16; i++) {
+            list.add(i);
+        }
+​
+        System.out.println("ArrayList elements: " + list);
+        System.out.println("ArrayList size: " + list.size());
+    }
+}
+
+Output
+ArrayList elements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+ArrayList size: 16
+Explanation: This example shows that ArrayList can store more elements than a normal array without specifying the size in advance.
+
+-> Internal Working Step by Step
+Step 1: Creating an ArrayList
+a. No internal array is created at this moment.
+b. Memory allocation happens when the first element is added.
+         ArrayList<Integer> list = new ArrayList<>();
+
+Step 2: Adding the First Element
+a. An internal array is created with default capacity 10.
+b. The first element is stored at index 0.
+    list.add(1);
+
+[ 1, _, _, _, _, _, _, _, _, _ ]
+
+Step 3: Adding Elements Up to Capacity
+a. Elements are added one by one.
+b. No resizing happens because there is enough space.
+    list.add(2);
+    ...
+    list.add(10);
+
+[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+
+Step 4: Adding the 11th Element (Resizing Happens)
+    list.add(11);
+Now the internal array becomes full. ArrayList performs the following operations:
+a. Creates a new array with larger size
+b. New capacity = old capacity + (old capacity / 2)
+    10 + 5 = 15
+
+c. Copies old elements to the new array
+d. Adds the new element
+    [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, _, _, _, _ ]
+
+Step 5: Adding More Elements
+When elements exceed the current capacity, ArrayList automatically resizes.
+a. Resizing formula: new capacity = old capacity + (old capacity / 2)
+b. Each resize involves creating a new array and copying old elements, which is costly if done frequently.
+c. To reduce overhead, ensureCapacity(int minCapacity) can pre-allocate sufficient internal array space.
+
+-> Benefits of ensureCapacity
+a. Prevents repeated resizing
+b. Reduces array copying overhead
+c. Improves performance when adding many elements
+Internal capacity grows dynamically, but using ensureCapacity allows controlled allocation.
+
+-> Why ArrayList is Cache Friendly
+a. Contiguous Memory Storage:ArrayList stores elements in contiguous memory locations because it is backed by an array (Object[]).
+b. Better CPU Cache Utilization:When the CPU loads one element into cache, nearby elements are also loaded automatically due to spatial locality.
+c. CPU Prefetch Optimization:Modern CPUs prefetch the next memory locations, so sequential access (like iteration) over ArrayList becomes faster.
+d. Fewer Cache Misses:Since elements are stored next to each other, the CPU does not need to fetch data from different memory locations frequently, resulting in fewer cache misses.

@@ -1,0 +1,94 @@
+Finding all elements in an array that are smaller than a given number K is a common requirement. This can be efficiently achieved by traversing the array and storing the results in a dynamic data structure, such as an ArrayList.
+
+Examples:
+
+Input: 
+arr = [5, 1, 8, 3, 7]
+K = 6
+Output: [5, 1, 3]
+
+Input: 
+arr = [10, 15, 7, 20, 3]
+K = 10
+Output: [7, 3]
+
+-> Approach
+The problem can be approached by following these steps:
+a. Create a dynamic list (ArrayList) to store elements smaller than K.
+b. Traverse the array and compare each element with K.
+c. If the element is smaller than K, add it to the list.
+d. Return the resulting list.
+
+-> Implementation
+import java.util.ArrayList;
+import java.util.List;
+​public class GFG {
+​    // Method to find elements smaller than a given value K
+    public static List<Integer>
+    findSmallerElements(int[] arr, int K)
+    {
+​
+        // Creating a List to store the result
+        List<Integer> result = new ArrayList<>();
+​
+        for (int num : arr) {
+​
+            // Check if the current element is smaller than
+            // K
+            if (num < K) {
+​
+                // Add the element to the result list
+                result.add(num);
+            }
+        }
+​
+        return result;
+    }
+​
+    public static void main(String[] args)
+    {
+​
+        int[] arr = { 5, 1, 8, 3, 7 };
+        int K = 6;
+        List<Integer> smallerElements
+            = findSmallerElements(arr, K);
+        System.out.println("Elements smaller than " + K
+                           + ": " + smallerElements);
+    }
+}
+
+Output
+Elements smaller than 6: [5, 1, 3]
+
+-> Alternative Approach: Using Java Streams (Java 8+)
+This approach uses Java Streams for a more concise solution:
+a. Convert the array into a stream using Arrays.stream().
+b. Use the filter() method to keep only elements smaller than K.
+c. Convert the filtered elements to a List using boxed() and collect(Collectors.toList()).
+e. Return or print the resulting list of smaller elements.
+
+-> Implementation
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+​public class GFG{
+​    public static void main(String[] args) {
+​        // Initializing the array
+        int[] arr = { 5, 1, 8, 3, 7 };
+​
+        // Value to compare with array elements
+        int K = 6;
+        List<Integer> smallerElements =
+                Arrays.stream(arr)            // Convert array to IntStream
+                      .filter(num -> num < K) // Filter elements less than K
+                      .boxed()                // Convert int to Integer (autoboxing)
+                      .collect(Collectors.toList()); // Collect result into a List
+​
+        // Printing the result
+        System.out.println("Elements smaller than " + K + ": " + smallerElements);
+    }
+}
+
+Output
+Elements smaller than 6: [5, 1, 3]

@@ -1,0 +1,89 @@
+Design a data structure that supports insertion of elements and removal of all occurrences of a given element while printing the remaining elements in their original insertion order.
+
+-> Problem Statement
+We need to design a data structure that supports the following operations:
+a. add(int x) : Adds an integer x to the data structure.
+b. removeAndPrint(int x): Removes all occurrences of x from the data structure and prints the remaining elements in the same order as they were inserted.
+Example:
+Input:
+add(10), add(20), add(10), add(30), removeAndPrint(10)
+add(30), add(40), add(60), removeAndPrint(30)
+Output:
+20 30
+20 40 60
+
+-> Using ArrayList vs LinkedList
+We can use ArrayList or LinkedList to implement this data structure. Below is a comparison:
+  -> ArrayList Approach:
+  a. Add Operation: O(1) (Amortized Time Complexity)
+  b.RemoveAndPrint Operation: O(n) (Since shifting is required after removal)
+  
+  -> LinkedList Approach (Preferred Solution):
+  a. Add Operation: O(1) (Worst case as well)
+  b. RemoveAndPrint Operation: O(n) (Efficient with iterators)
+Since LinkedList allows fast insertions and removals using iterators, it is an optimal choice.
+
+Implementation Using LinkedList
+Below is a Java implementation using LinkedList:
+
+import java.util.*;
+​class MyDS {
+    LinkedList<Integer> list = new LinkedList<>();
+    
+    void add(int x) {
+        list.add(x);
+    }
+    
+    void removeAndPrint(int x) {
+        Iterator<Integer> it = list.iterator();
+        
+        while (it.hasNext()) {
+            Integer n = it.next();
+            if (n.equals(x)) {
+                it.remove();
+            } else {
+                System.out.print(n + " ");
+            }
+        }
+        System.out.println();
+    }
+}
+​
+public class GFG {
+    public static void main(String[] args) {
+        MyDS ds = new MyDS();
+        
+        ds.add(10);
+        ds.add(20);
+        ds.add(10);
+        ds.add(30);
+        ds.removeAndPrint(10); 
+        
+        ds.add(30);
+        ds.add(40);
+        ds.add(60);
+        ds.removeAndPrint(30); 
+    }
+}
+
+
+Output:
+20 30
+20 40 60
+
+Explanation of Code
+1. Class MyDS:
+a. Uses a LinkedList to store integers.
+b. add(int x) appends an integer to the list.
+c. removeAndPrint(int x) iterates through the list, removes x, and prints the remaining elements.
+
+2. Class GFG (Main Class):
+a. Demonstrates adding and removing elements.
+b. Prints the updated list after each removeAndPrint() operation.
+
+-> Complexity Analysis
+    Operation          Time Complexity
+    add(x)	           O(1) (Worst case)
+    removeAndPrint(x)	 O(n)
+a. Adding elements is O(1) because LinkedList allows quick appends.
+b.Removing elements is O(n) since we traverse using an iterator.

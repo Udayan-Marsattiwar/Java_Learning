@@ -1,0 +1,224 @@
+In Java, a Stack is a linear data structure that follows the Last In First Out (LIFO) principle and is defined in the java.util package. Internally, it extends the Vector class.
+a. Stack class maintains insertion order and allows duplicates and null values.
+b. Grows dynamically when its capacity is exceeded.
+c. All the methods of Stack are synchronized.
+d. It is thread-safe.
+e. Stack class implements List, RandomAccess, Cloneable, and Serializable interfaces.
+The Stack class is a legacy class from early versions of Java. For new code, it is generally recommended to use ArrayDeque or LinkedList to implement stack behavior, as they offer better performance and flexibility in single-threaded scenarios.
+
+import java.util.Stack;
+​
+public class Geeks {
+    public static void main(String[] args)
+    {
+        // Create a new stack
+        Stack<Integer> s = new Stack<>();
+​
+        // Push elements onto the stack
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+​
+        // Pop elements from the stack
+        while (!s.isEmpty()) {
+            System.out.println(s.pop());
+        }
+    }
+}
+
+Output
+4
+3
+2
+1
+Explanation:
+
+a. Elements are added to the stack using the push() method, placing each item on top.
+b. A loop runs while the stack is not empty, checked using the empty() method.
+c. Elements are removed and printed using the pop() method in LIFO order.
+
+-> Hierarchy of Stack class
+The below diagram shows the hierarchy of the Stack class: 
+
+                    Iterable              ←
+                       ↑ extends            |
+                   Collection               |
+                       ↑ extends            | Interface
+                      List                  |
+                       ↑ implements         |
+                     Vector               ←
+                       ↑ extends            |  Class
+                     Stack                ←
+
+--> Constructors of Stack in Java
+In order to create a Stack, we need to create an object of the Stack class. The Stack class inherits constructors from the Vector class.
+
+1. Stack()
+This constructor is used to create an empty stack.
+    Stack<Integer> stack = new Stack<>()
+
+2. Stack(int initialCapacity)
+This constructor is used to create a stack with a specified initial capacity.
+    Stack<Integer> stack = new Stack<>(20);
+
+--> Performing Different Operations on Stack Class
+1. Adding Elements
+With the help of push() method we can add element to the stack. The push() method place the element at the top of the stack.
+import java.io.*;
+import java.util.*;
+​
+class Geeks {
+​
+    public static void main(String[] args)
+    {
+        // Default initialization of Stack
+        Stack stack1 = new Stack();
+​
+        // Initialization of Stack using Generics
+        Stack<String> stack2 = new Stack<String>();
+​
+        // pushing the elements
+        stack1.push("4");
+        stack1.push("All");
+        stack1.push("Geeks");
+​
+        stack2.push("Geeks");
+        stack2.push("For");
+        stack2.push("Geeks");
+​
+        // Printing the Stack Elements
+        System.out.println(stack1);
+        System.out.println(stack2);
+    }
+}
+
+Output
+[4, All, Geeks]
+[Geeks, For, Geeks]
+
+2. Accessing the Element
+With the help of peek() method we can fetch the top element of the stack. 
+import java.io.*;
+import java.util.*;
+​
+public class Geeks {
+​
+    public static void main(String args[])
+    {
+        // Creating an empty Stack
+        Stack<String> stack = new Stack<String>();
+​
+        // Use push() to add elements into the Stack
+        stack.push("Welcome");
+        stack.push("To");
+        stack.push("Geeks");
+        stack.push("For");
+        stack.push("Geeks");
+​
+        // Displaying the Stack
+        System.out.println("Initial Stack: " + stack);
+​
+        // Fetching the element at the head of the Stack
+        System.out.println("The element at the top of the"
+                           + " stack is: " + stack.peek());
+​
+        System.out.println("Final Stack: " + stack);
+    }
+}
+
+Output
+Initial Stack: [Welcome, To, Geeks, For, Geeks]
+The element at the top of the stack is: Geeks
+Final Stack: [Welcome, To, Geeks, For, Geeks]
+
+3. Removing Elements
+With the help of pop() method we can delete and return the top element from the stack.
+import java.io.*;
+import java.util.*;
+​
+public class Geeks {
+    public static void main(String args[])
+    {
+        // Creating an empty Stack
+        Stack<Integer> stack = new Stack<Integer>();
+​
+        // Use add() method to add elements
+        stack.push(10);
+        stack.push(15);
+        stack.push(30);
+        stack.push(20);
+        stack.push(5);
+​
+        System.out.println("Initial Stack: " + stack);
+​
+        // Removing elements using pop() method
+        System.out.println("Popped element: "
+                           + stack.pop());
+        System.out.println("Popped element: "
+                           + stack.pop());
+​
+        // Displaying the Stack after pop operation
+        System.out.println("Stack after pop operation "
+                           + stack);
+​
+        System.out.println("Is stack empty? "
+                           + stack.empty());
+        // Pop remaining elements
+        stack.pop();
+        stack.pop();
+        stack.pop();
+​
+        // Check if the stack is empty
+        System.out.println("Is stack empty? "
+                           + stack.empty());
+    }
+}
+
+Output
+Initial Stack: [10, 15, 30, 20, 5]
+Popped element: 5
+Popped element: 20
+Stack after pop operation [10, 15, 30]
+Is stack empty? false
+Is stack empty? true
+
+-> Prioritize Use of Deque over Stack
+The Stack class in Java is inherits from Vector in Java. It is a thread-safe class. It is recommended to use ArrayDeque for stack implementation as it is more efficient in a single-threaded environment.
+import java.util.*;
+​class Geeks {
+    public static void main(String[] args) {
+​
+        // Stack implementation
+        Stack<Integer> stack = new Stack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+​
+        System.out.println("Using Stack (LIFO):");
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " "); // pops elements in LIFO order
+        }
+        System.out.println();
+​
+        // ArrayDeque as stack
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.push(1);
+        deque.push(2);
+        deque.push(3);
+​
+        System.out.println("Using ArrayDeque (LIFO):");
+        while (!deque.isEmpty()) {
+            System.out.print(deque.pop() + " "); // pops elements in LIFO order
+        }
+        System.out.println();
+    }
+}
+
+Output
+Using Stack (LIFO):
+3 2 1 
+Using ArrayDeque (LIFO):
+3 2 1 
+
+continuation image attached.

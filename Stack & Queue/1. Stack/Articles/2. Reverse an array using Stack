@@ -1,0 +1,88 @@
+Given an array arr[] of size n, the task is to reverse the array using Stack.
+
+Examples:
+
+Input: arr = [10, 20, 30, 40, 50] 
+Output: 50 40 30 20 10 
+Explanation: Upon reversing the array becomes [50, 40, 30, 20, 10]. Therefore, the output is 50 40 30 20 10.
+
+Input: arr = [ 1 ]
+Output: 1
+Explanation: Reversing the array does not changes the array as it only has a single element 
+
+Also read: Array Reverse – Complete Tutorial
+
+The idea is to push all elements of the array into the stack. Since a stack follows the Last In, First Out (LIFO) principle, popping elements from the stack and storing them back into the array results in a reversed order. This efficiently reverses the array without using extra loops for swapping.
+
+Follow the steps given below to reverse an array using stack. 
+
+Create an empty stack.
+One by one push all elements of the array to stack.
+One by one pop all elements from the stack and push them back to the array.
+
+
+
+import java.util.*;
+class GfG {
+    static void reverseArray(int arr[])
+    {
+        int n = arr.length;
+        //declare a stack
+        Stack<Integer> st = new Stack<>();
+        
+        //push array elements into stack
+        for (int i = 0; i < n; i++) {
+            st.push(arr[i]);
+        }
+        
+        // update elements of array 
+        int i = 0;
+        while (st.empty() == false) {
+            int top = st.peek();
+            st.pop();
+            arr[i] = top;
+            i++;
+        }
+        return;
+    }
+​
+    public static void main(String args[])
+    {
+        int[] a = new int[] { 100, 200, 300, 400 };
+import java.util.*;
+class GfG {
+    static void reverseArray(int arr[])
+    {
+        int n = arr.length;
+        //declare a stack
+        Stack<Integer> st = new Stack<>();
+        
+        //push array elements into stack
+        for (int i = 0; i < n; i++) {
+            st.push(arr[i]);
+        }
+        
+        // update elements of array 
+        int i = 0;
+        while (st.empty() == false) {
+            int top = st.peek();
+            st.pop();
+            arr[i] = top;
+            i++;
+        }
+        return;
+    }
+​
+    public static void main(String args[])
+    {
+        int[] a = new int[] { 100, 200, 300, 400 };
+​
+        reverseArray(a);
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + " ");
+        }
+    }
+}
+
+Output
+400 300 200 100 

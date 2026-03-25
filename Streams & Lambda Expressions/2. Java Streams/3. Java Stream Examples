@@ -1,0 +1,257 @@
+Java Streams provide a modern and concise way to process collections of data. They support operations such as filtering, mapping, sorting, and aggregation using a functional programming approach.
+
+1. Sum of Array
+import java.io.*;
+import java.util.*;
+​
+class GFG {
+    public static void main(String[] args)
+    {
+        int arr[] = { 30, 20, 10 };
+        int sum = Arrays.stream(arr).sum();
+        System.out.println(sum);
+    }
+}
+
+Output
+60
+Explanation: Arrays.stream(arr) converts the array into an IntStream and The sum() method internally iterates over elements and returns their total..
+
+2. Maximum in Array
+import java.io.*;
+import java.util.*;
+​
+class GFG {
+    public static void main(String[] args)
+    {
+        int arr[] = { 30, 20, 10 };
+        int max = Arrays.stream(arr).max().getAsInt();
+        System.out.println(max);
+    }
+}
+
+Output
+30
+Explanation: max() returns an OptionalInt and getAsInt() retrieves the value (array must be non-empty).
+
+3. Average of Array
+import java.io.*;
+import java.util.*;
+​
+class GFG {
+    public static void main(String[] args)
+    {
+        int arr[] = { 30, 20, 10 };
+        double avg
+            = Arrays.stream(arr).average().getAsDouble();
+        System.out.println(avg);
+    }
+}
+
+Output
+20.0
+Explanation: This code calculates the average of the array elements using the average() method. The getAsDouble() method retrieves the value from the OptionalDouble returned by average().
+
+4. Print first N natural numbers with given digit d
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+​
+class GFG {
+    public static void main(String[] args) {
+        Stream.iterate(1, x -> x + 1)
+            .filter(x -> x.toString().contains("5"))
+            .limit(10)
+            .forEach(System.out::println);
+    }
+}
+
+Output
+5
+15
+25
+35
+45
+50
+51
+52
+53
+54
+Explanation:
+a. This code generates the first 10 natural numbers that contain the digit '5'.
+b. iterate() generates an infinite stream, and filter() ensures only numbers containing '5' are included.
+c. The stream is then limited to 10 values using limit(10) and printed using forEach().
+
+5. Strings That Begin with 'a' and End with 'c'
+import java.io.*;
+import java.util.*;
+​
+class GFG {
+    public static void main(String[] args)
+    {
+        String arr[] = { "abc", "cde", "ac", "aec", "xy3" };
+        Arrays.stream(arr)
+            .filter(x -> x.startsWith("a"))
+            .filter(x -> x.endsWith("c"))
+            .sorted()
+            .forEach(System.out::println);
+    }
+}
+
+Output
+abc
+ac
+aec
+Explanation: The filter() method is applied twice: first to check if the string starts with 'a', and second to check if it ends with 'c'.The sorted() method sorts the strings lexicographically.
+
+6. Average Marks for Students
+import java.io.*;
+import java.util.*;
+​
+class Student {
+    int roll;
+    int marks;
+    String name;
+​
+    Student(int r, String n, int m)
+    {
+        roll = r;
+        name = n;
+        marks = m;
+    }
+​
+    int getMarks() { return marks; }
+}
+​
+class GFG {
+    public static void main(String[] args)
+    {
+        Student arr[] = { new Student(110, "abc", 70),
+                          new Student(101, "bcd", 80),
+                          new Student(120, "xyz", 60) };
+​
+        double res = Arrays.stream(arr)
+                         .mapToInt(x -> x.getMarks())
+                         .average()
+                         .getAsDouble();
+​
+        System.out.println(res);
+    }
+}
+
+Output
+70.0
+Explanation:
+a. This example calculates the average marks of students.
+b. The stream is created from an array of Student objects, and mapToInt() extracts the marks.
+c. The average() method returns the average, and getAsDouble() is used to retrieve the result.
+
+7. Collect Method (toMap)
+Collect() method to convert a stream of Student objects into a map, where the student's roll number is the key, and the student's name is the value.
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+​
+class Student {
+    int roll;
+    int marks;
+    String name;
+​
+    Student(int r, String n, int m) {
+        roll = r;
+        name = n;
+        marks = m;
+    }
+​
+    int getRoll() {
+        return roll;
+    }
+​
+    String getName() {
+        return name;
+    }
+​
+    int getMarks() {
+        return marks;
+    }
+}
+​
+class GFG {
+    public static void main(String[] args) {
+        Student arr[] = {
+            new Student(110, "abc", 70),
+            new Student(101, "bcd", 80),
+            new Student(120, "xyz", 60)
+        };
+        
+        Map<Integer, String> m = Arrays.stream(arr)
+            .collect(Collectors.toMap(Student::getRoll, Student::getName));
+        
+        for (Map.Entry<Integer, String> ent : m.entrySet()) {
+            System.out.println(ent.getKey() + " " + ent.getValue());
+        }
+    }
+}
+
+Output
+101 bcd
+120 xyz
+110 abc
+Explanation:The collect() method is used here to convert the stream of Student objects into a map.The toMap() collector takes two functions: one for the key (roll number) and one for the value (name).
+
+8. Collect Method (Grouping By)
+Group students by their marks using the groupingBy() collector. It creates a map where the key is the marks, and the value is a list of students with those marks.
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+​
+class Student {
+    int roll;
+    int marks;
+    String name;
+​
+    Student(int r, String n, int m)
+    {
+        roll = r;
+        name = n;
+        marks = m;
+    }
+​
+    int getRoll() { return roll; }
+​
+    String getName() { return name; }
+​
+    int getMarks() { return marks; }
+}
+​
+class GFG {
+    public static void main(String[] args)
+    {
+        Student arr[] = { new Student(110, "abc", 70),
+                          new Student(101, "bcd", 70),
+                          new Student(120, "xyz", 60) };
+​
+        Map<Integer, List<Student> > m
+            = Arrays.stream(arr).collect(
+                Collectors.groupingBy(Student::getMarks));
+​
+        for (Map.Entry<Integer, List<Student> > ent :
+             m.entrySet()) {
+            List<Student> ls = ent.getValue();
+            System.out.print(ent.getKey() + ": ");
+            ls.stream().forEach(
+                x
+                -> System.out.print("{" + x.getRoll() + ", "
+                                    + x.getName() + ", "
+                                    + x.getMarks() + "} "));
+            System.out.println();
+        }
+    }
+}
+
+Output
+70: {110, abc, 70} {101, bcd, 70} 
+60: {120, xyz, 60} 
+Explanation: The groupingBy() collector is used to group students by their marks. It returns a map where the key is the marks, and the value is a list of students having those marks.

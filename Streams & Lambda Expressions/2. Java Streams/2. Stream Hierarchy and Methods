@@ -1,0 +1,68 @@
+Java Streams provide a declarative and efficient way to process collections of data. Introduced in Java 8, the Stream API allows developers to perform bulk operations such as filtering, mapping, and aggregation without modifying the underlying data source. The Stream API is built on a well-defined hierarchy of interfaces, each serving a specific purpose.
+
+--> Stream Hierarchy in Java
+At the top of the hierarchy is the BaseStream interface. It is the parent interface for all stream types and defines fundamental stream behaviors.
+
+-> BaseStream Interface
+BaseStream<T, S extends BaseStream<T, S>> provides core stream control methods such as:
+
+a. parallel(): converts a stream into a parallel stream
+b. sequential(): converts a parallel stream back to sequential
+c. unordered(): removes ordering constraints, useful for performance optimization
+d. close(): closes the stream (mainly for I/O-based streams)
+
+Base Stream -> Int Stream
+            -> Long Stream
+            -> Double Stream
+            -> Stream<T>
+
+-> Stream Subinterfaces
+Java provides four primary stream interfaces that extend BaseStream:
+a. Stream<T>: used for object/reference types
+b. IntStream: specialized stream for int primitives
+c. LongStream: specialized stream for long primitives
+d. DoubleStream: specialized stream for double primitives
+Primitive streams exist to avoid boxing overhead and improve performance.
+
+--> Common Stream Operations
+Most stream interfaces provide a consistent set of operations used for data processing. These operations are classified as intermediate or terminal.
+Commonly used stream methods include:
+a. filter(): selects elements matching a condition
+b. map(): transforms elements
+c. distinct(): removes duplicate elements
+d. sorted(): sorts elements
+e. skip(): skips a specified number of elements
+f. findFirst(): retrieves the first element
+g. count(): counts elements
+h. min() / max(): finds minimum or maximum values
+i. reduce(): reduces elements to a single value
+j. collect(): converts the stream into a collection
+
+-> Intermediate vs Terminal Operations
+Intermediate Operations: Intermediate operations return a new stream and are lazy, meaning they are not executed until a terminal operation is invoked.
+Examples: filter(), map(), sorted(), distinct().
+
+-> Terminal Operations: Terminal operations trigger stream processing and produce a result or side effect. After a terminal operation, the stream cannot be reused.
+Examples: forEach(), collect(), reduce(), count().
+
+Key Differences:
+
+Operation Type	    Returns Stream?	    Examples
+Intermediate	      Yes	                filter(), map(), sorted()
+Terminal	          No	                collect(), forEach(), reduce()
+
+--> Numeric Stream-Specific Operations
+Primitive streams (IntStream, LongStream, DoubleStream) provide additional numeric operations that are not available in Stream<T>:
+a. sum(): Computes the sum of elements.
+b. average(): Computes the average of elements.
+c. boxed(): Converts a primitive stream into an object-based stream (e.g., IntStream → Stream<Integer>).
+These methods eliminate the need for manual reduction logic.
+
+--> Boxing Primitive Streams
+Primitive streams can be converted into object streams using the boxed() method when object-based processing is required. Used when a primitive stream needs to be converted into a wrapper class stream.
+
+Conversions:
+IntStream - Stream<Integer>
+LongStream - Stream<Long>
+DoubleStream - Stream<Double>
+This is useful when working with APIs that require object types instead of primitives.

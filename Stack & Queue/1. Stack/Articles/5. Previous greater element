@@ -1,0 +1,114 @@
+Given an array arr[], find the Previous Greater Element (PGE) for every element in the array.
+
+a. The Previous Greater Element of an element x is defined as the first element to its left in the array that is greater than x.
+b. If no such element exists for a particular position, the PGE should be considered as -1.
+Examples: 
+  Input: arr[] = [10, 4, 2, 20, 40, 12]
+Output: [-1, 10, 4, -1, -1, 40]
+Explanation:
+For 10 → No elements on the left → -1
+For 4 → Previous greater element is 10 → 10
+For 2 → Previous greater element is 4 → 4
+For 20 → No element on the left greater than 20 → -1
+For 40 → No element on the left greater than 40 → -1
+For 12 → Previous greater element is 40 → 40
+
+Input: arr[] = [10, 20, 30, 40]
+Output: [-1, -1, -1, -1]
+Explanation: Since the array is strictly increasing, no element has a greater element before it. Hence, all positions are assigned -1.
+
+Table of Content
+
+[Naive Solution] - Nested Loops - O(n^2) Time and O(1) Space
+[Expected Solution] Using Monotonic Stack - O(n) Time and O(n) Space
+
+[Naive Solution] - Nested Loops - O(n2) Time and O(1) Space
+The idea is to use two loops: for each element, check the remaining elements on its right to find the next greater one. If none exists, store -1.
+import java.util.ArrayList;
+​
+class GfG {
+    static ArrayList<Integer> preGreaterEle(int[] arr) {
+        int n = arr.length;
+     
+        // initialize all PGEs as -1
+        ArrayList<Integer> result = new ArrayList<>();
+        for (int i = 0; i < n; i++) result.add(-1);
+​
+        for (int i = 0; i < n; i++) {
+     
+            // check all elements on the left
+            for (int j = i - 1; j >= 0; j--) {
+                if (arr[j] > arr[i]) {
+     
+                    // first greater element on the left
+                    result.set(i, arr[j]);
+                    break;
+                }
+            }
+        }
+​
+        return result;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {10, 4, 2, 20, 40, 12};
+        ArrayList<Integer> pge = preGreaterEle(arr);
+​
+        for (int x : pge) System.out.print(x + " ");
+        System.out.println();
+    }
+}
+
+Output
+-1 10 4 -1 -1 40 
+
+[Expected Solution] Using Monotonic Stack - O(n) Time and O(n) Space
+The idea is to use a monotonic decreasing stack. We traverse the array from left to right. For each element, we pop elements from the stack that are smaller than or equal to it, since they cannot be the previous greater element. If the stack is not empty, the top of the stack is the previous greater element. Finally, we push the current element onto the stack.
+
+import java.util.ArrayList;
+import java.util.Stack;
+import java.util.Collections;
+​
+class Solution {
+    static ArrayList<Integer> preGreaterEle(int[] arr) {
+        int n = arr.length;
+​
+        // initialize all PGEs as -1
+        ArrayList<Integer> result = new ArrayList<>(Collections.nCopies(n, -1));
+​
+        // stack to keep track of elements
+        Stack<Integer> st = new Stack<>();
+​
+        // traverse the array from left to right
+        for (int i = 0; i < n; i++) {
+​
+            // pop elements from stack which are <= current element
+            while (!st.isEmpty() && st.peek() <= arr[i]) {
+                st.pop();
+            }
+​
+            // if stack is not empty, top element is PGE
+            if (!st.isEmpty()) {
+                result.set(i, st.peek());
+            }
+​
+            // push current element onto stack
+            st.push(arr[i]);
+        }
+​
+        return result;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {10, 4, 2, 20, 40, 12};
+        ArrayList<Integer> pge = preGreaterEle(arr);
+​
+        for (int x : pge) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+    }
+}
+
+Output
+-1 10 4 -1 -1 40 

@@ -1,0 +1,273 @@
+Design a SpecialStack that supports push(x), pop(), peek(), and getMin() in O(1) time.
+a. push(x) → add element x
+b. pop() → remove top element
+c. peek() → return top element without removing; -1 if empty
+d. getMin() → return minimum element; -1 if empty
+All operations run in O(1).
+ Example: 
+Input: operations[] = [push(2), push(3), peek(), pop(), getMin(), push(1), getMin()]
+Output: [3, 2, 1] 
+Explanation: 
+push(2): Stack is [2]
+push(3): Stack is [2, 3]
+peek(): Top element is 3
+pop(): Removes 3, stack is [2]
+getMin(): Minimum element is 2
+push(1): Stack is [2, 1]
+getMin(): Minimum element is 1
+
+Input: operations[] = [push(10), getMin(), push(5), getMin(), pop()]
+Output: [10, 5]
+Explanation: 
+push(10): Stack is [10]
+getMin(): Minimum element is 10
+push(5): Stack is [10, 5]
+getMin(): Minimum element is 5
+pop(): Removes 5, stack is [10]
+
+Table of Content
+[Approach 1] Using an Auxiliary Stack - O(1) Time and O(n) Space
+[Approach 2] Using a Pair in Stack - O(1) Time and O(n) Space
+[Approach 3] Without Extra Space- O(1) Time and O(1) Space
+
+[Approach 1] Using an Auxiliary Stack - O(1) Time and O(n) Space
+  Use two stacks: one to store actual stack elements and the other as an auxiliary stack to store minimum values. The idea is to do push() and pop() operations in such a way that the top of the auxiliary stack is always the minimum.
+Let us see how push() and pop() operations work.
+-> Push(int x)
+a. push x to the first stack (the stack with actual elements) 
+b. compare x with the top element of the second stack (the auxiliary stack). Let the top element be y. 
+c. If x is smaller than y then push x to the auxiliary stack. 
+d. If x is greater than y then push y to the auxiliary stack.
+
+->Pop
+a. pop the top element from the auxiliary stack. 
+b. pop the top element from the actual stack
+
+-> int getMin()
+Return the top element of the auxiliary stack.
+import java.util.Stack;
+​class SpecialStack {
+    Stack<Integer> st = new Stack<>();
+    Stack<Integer> minSt = new Stack<>();
+​
+    public void push(int x) {
+        st.push(x);
+        
+        // If the minSt is empty or the new element is smaller than 
+        // the top of minSt, push it onto minSt
+        if (minSt.isEmpty() || x <= minSt.peek()) {
+            minSt.push(x);
+        } else {
+        
+            // Otherwise, push the top element of minSt 
+            // again to keep the minimum unchanged
+            minSt.push(minSt.peek());
+        }
+    }
+​
+    // Pop the top element from the stack
+    public void pop() {
+        if (st.isEmpty()) {
+            return;
+        }
+        // Pop from both stacks
+        st.pop();
+        minSt.pop();
+    }
+​
+    // Return the top element of the stack without removing it
+    public int peek() {
+        if (st.isEmpty()) {
+            return -1;
+        }
+        return st.peek();
+    }
+​
+    // Get the minimum element in the stack
+    public int getMin() {
+        if (minSt.isEmpty()) {
+            return -1;
+        }
+        return minSt.peek();
+    }
+}
+​
+public class GfG {
+    public static void main(String[] args) {
+        SpecialStack st = new SpecialStack();
+        
+        st.push(18);
+        st.push(19);
+        st.push(29);
+        st.push(15);
+        st.push(16);
+​
+        System.out.println(st.getMin());
+    }
+}
+
+Output
+15
+Time Complexity: 
+a. For insert operation: O(1) (As insertion 'push' in a stack takes constant time)
+b. For delete operation: O(1) (As deletion 'pop' in a stack takes constant time)
+c. For 'Get Min' operation: O(1) (As we have used an auxiliary stack which has it's top as the minimum element)
+
+Auxiliary Space: O(n)
+[Approach 2] Using a Pair in Stack - O(1) Time and O(n) Space
+This approach uses a stack where each element is stored as a pair: the element itself and the minimum value up to that point. When an element is pushed, the minimum is updated. The getMin() function directly accesses the minimum value from the top of the stack in constant time, ensuring that both push(), pop(), and getMin() operations are O(1). This approach efficiently tracks the minimum value without needing to traverse the stack.
+import java.util.Stack;
+​class SpecialStack {
+    private Stack<int[]> st;
+​
+    public SpecialStack() {
+        st = new Stack<>();
+    }
+​
+    // Add an element to the top of Stack
+    public void push(int x) {
+        int newMin = st.isEmpty() ? x : Math.min(x, st.peek()[1]);
+        st.push(new int[]{x, newMin});
+    }
+​
+    // Remove the top element from the Stack
+    public void pop() {
+        if (!st.isEmpty()) {
+            st.pop();
+        }
+    }
+​
+    // Returns top element of the Stack
+    public int peek() {
+        return st.isEmpty() ? -1 : st.peek()[0];
+    }
+​
+    // Finds minimum element of Stack
+    public int getMin() {
+        return st.isEmpty() ? -1 : st.peek()[1];
+    }
+​
+    public static void main(String[] args) {
+        SpecialStack st = new SpecialStack();
+​
+        // Function calls
+        st.push(2);
+        st.push(3);
+        System.out.print(st.peek() + " ");
+        st.pop();
+        System.out.print(st.getMin() + " ");
+        st.push(1);
+        System.out.print(st.getMin() + " ");
+    }
+}
+
+Output
+3 2 1 
+
+[Approach 3] Without Extra Space- O(1) Time and O(1) Space
+The idea is to use a variable minEle to track the minimum element in the stack. Instead of storing the actual value of minEle in the stack, we store a modified value when pushing an element smaller than minEle.
+
+-> Push(x)
+a. If the stack is empty, push x and set minEle = x.
+b. If x >= minEle, push x normally.
+c. If x < minEle, push 2*x - minEle and update minEle = x (this encodes the previous min).
+
+-> Pop()
+a. Remove the top element.
+b. If the removed element is >= minEle, no change in minEle.
+c. If the removed element is < minEle, update minEle = 2*minEle - top (decoding the previous min).
+
+-> Peek()
+a. Returns minEle if the top is modified (encoded) or top otherwise.
+
+-> getMin()
+a. Returns minEle, the current minimum in O(1) time.
+
+-> How this approach works:
+a. When pushing a new element x that is smaller than minEle, we store 2*x - minEle in the stack and update minEle = x.
+b. This encoded value is always less than x, signaling that minEle has changed.
+
+-> Why 2*x - minEle < x:
+a. Since x < minEle, x - minEle < 0
+   Adding x on both sides:
+   2*x - minEle < x
+b. So, the stack stores a “flag” value less than x to remember the previous minimum.
+
+-> Restoring previous min when popping:
+a. Let y be the popped value (y = 2*x - prevMinEle).
+b. Current minEle = x.
+c. Restore previous minimum:
+   prevMinEle = 2*minEle - y = 2*x - (2*x - prevMinEle) = prevMinEle
+This way, we can always track the current minimum in O(1) time using only one stack.
+
+import java.util.Stack;
+​
+class SpecialStack {
+    private Stack<Integer> st;
+    private int minEle;
+​
+    public SpecialStack() {
+        st = new Stack<>();
+        minEle = -1;
+    }
+​
+    // Add an element to the top of stack
+    public void push(int x) {
+        if (st.isEmpty()) {
+            minEle = x;
+            st.push(x);
+        }
+        // If new number is less than minEle
+        else if (x < minEle) {
+            st.push(2 * x - minEle);
+            minEle = x;
+        } else {
+            st.push(x);
+        }
+    }
+​
+    // Remove the top element from the stack
+    public void pop() {
+        if (st.isEmpty()) return;
+​
+        int top = st.pop();
+​
+        // Minimum will change if min element is removed
+        if (top < minEle) {
+            minEle = 2 * minEle - top;
+        }
+    }
+​
+    // Return top element of the stack
+    public int peek() {
+        if (st.isEmpty()) return -1;
+​
+        int top = st.peek();
+​
+        // If minEle > top, minEle stores value of top
+        return (minEle > top) ? minEle : top;
+    }
+​
+    // Return minimum element of the stack
+    public int getMin() {
+        if (st.isEmpty()) return -1;
+​
+        // variable minEle stores the minimum element
+        return minEle;
+    }
+​
+    public static void main(String[] args) {
+        SpecialStack st = new SpecialStack();
+​
+        st.push(2);
+        st.push(3);
+        System.out.print(st.peek() + " ");
+        st.pop();
+        System.out.print(st.getMin() + " ");
+        st.push(1);
+        System.out.print(st.getMin() + " ");
+    }
+}
+
+Output
+3 2 1 

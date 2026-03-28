@@ -1,0 +1,176 @@
+Given an integer k and a queue of integers, The task is to reverse the order of the first k elements of the queue, leaving the other elements in the same relative order.
+Only following standard operations are allowed on the queue. 
+a. enqueue(x): Add an item x to rear of queue
+b. dequeue(): Remove an item from the front of the queue
+c. size(): Returns the number of elements in the queue.
+d. front(): Finds front item.
+
+Example:
+Input: q = 1 2 3 4 5, k = 3
+Output: 3 2 1 4 5
+Explanation:  After reversing the first 3 elements from the given queue the resultant queue will be 3 2 1 4 5.
+
+Input: q = 4 3 2 1, k= 4
+Output: 1 2 3 4
+Explanation: After reversing the first 4 elements from the given queue the resultant queue will be 1 2 3 4.
+
+-> Using the Recursion Call Stack - O(n) Time and O(n) Space
+The idea is to remove and store the first k elements in recursive call stack and insert them in the queue in the reverse order then we can simply remove and add remaining items of the queue. 
+import java.io.*;
+import java.util.*;
+​public class GfG {  
+      // Function to reverse first k elements of a queue.
+   static Queue<Integer> reverseFirstK(Queue<Integer> q, int k) {
+       moveKToEnd(q, k);
+       int s = q.size() - k;
+       while( s-- > 0){
+           int x = q.poll();
+           q.add(x);
+       }
+       return q;
+   }
+   
+   static void moveKToEnd(Queue<Integer> q, int k){
+       if(k == 0) return;
+       int e = q.poll();
+       moveKToEnd(q, k - 1);
+       q.add(e);
+   }
+ 
+   // driver code
+   public static void main (String[] args) {
+       Queue<Integer> queue = new LinkedList<Integer>();
+       queue.add(1);
+       queue.add(2);
+       queue.add(3);
+       queue.add(4);
+       queue.add(5);
+       
+​
+       int k = 3;
+       queue = reverseFirstK(queue, k);
+       // printing queue
+      while (!queue.isEmpty()) {
+           System.out.print(queue.poll() + " ");
+       }
+   }
+}
+
+Output
+3 2 1 4 5 
+
+-> Time Complexity: O(n), function reverseFirstK calls the recursive function solve, which takes O(k) time to reverse the first k elements of the queue then the function reverseFirstK takes O(n-k) time to move the remaining elements to the end of the queue.
+-> Auxiliary Space: O(n) , as the size of the call stack for the two recursive functions will O(k) and O(n-k).
+
+-> Using a Stack - O(n+k) Time and O(k) Space
+The idea is to use an auxiliary stack. Remove(dequeue) the first k elements from the queue  and push them in a stack after this pop the elements from the stack and add(enqueue) them to the queue , after that simply remove(dequeue) the remaining n-k elements from the queue and add(enqueue) them back to the queue. 
+import java.util.*;
+​public class GFG {
+​    /* Function to reverse the first
+       K elements of the Queue */
+    static void reverseFirstK(Queue<Integer> q, int k) {
+        if (q.isEmpty() || k > q.size())
+            return;
+        if (k <= 0)
+            return;
+​
+        Stack<Integer> s = new Stack<>();
+​
+        /* Push the first K elements
+           into a Stack*/
+        for (int i = 0; i < k; i++) {
+            s.push(q.poll());
+        }
+​
+        /* Enqueue the contents of stack
+           at the back of the queue*/
+        while (!s.isEmpty()) {
+            q.add(s.pop());
+        }
+​
+        /* Remove the remaining elements and
+           enqueue them at the end of the Queue*/
+        for (int i = 0; i < q.size() - k; i++) {
+            q.add(q.poll());
+        }
+    }
+​
+    /* Utility Function to print the Queue */
+    static void print(Queue<Integer> q) {
+        while (!q.isEmpty()) {
+            System.out.print(q.poll() + " ");
+        }
+    }
+​
+    public static void main(String[] args) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        q.add(4);
+        q.add(5);
+​
+        int k = 3;
+        reverseFirstK(q, k);
+        print(q);
+    }
+}
+
+Output
+3 2 1 4 5 
+Time Complexity: O(n + k), Where 'n' is the total number of elements in the queue and 'k' is the number of elements to be reversed. This is because firstly the k elements from the queue is emptied into the stack and then added back to the queue from the stack after that first 'n-k' elements are emptied and enqueued back to the queue.
+Auxiliary Space: O(k) due to the stack used to store the first k elements.
+
+-> Using Doubly Ended Queue - O(n+k) Time and O(k) Space
+The idea is to use the deque as a temporary container to store the first k elements of the queue and then add them to the queue in reverse order. 
+Dequeue the first k elements of the queue and push them onto a deque using the push_front() function. Now, Pop the elements from the deque one by one using the pop_front() function and enqueue them back into the queue. Then, Dequeue the remaining elements from the queue and enqueue them back into the queue. 
+import java.util.*;
+​public class ReverseFirstKQueue {
+    // Function to reverse first k elements of the queue
+    public static void reverseFirstK(Queue<Integer> q, int k){
+        Deque<Integer> d = new ArrayDeque<>();
+​
+        // Dequeue the first k elements of the queue and
+        // push them onto a deque
+        for (int i = 0; i < k; i++) {
+            d.push(q.poll());
+        }
+​
+        // Pop the elements from the deque and enqueue them
+        // back into the queue
+        while (!d.isEmpty()) {
+            q.add(d.pop());
+        }
+​
+        // Dequeue the remaining elements from the queue and
+        // enqueue them back into the queue
+        for (int i = 0; i < q.size() - k; i++) {
+            q.add(q.poll());
+        }
+    }
+​
+    public static void main(String[] args){
+        Queue<Integer> q = new LinkedList<Integer>();
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        q.add(4);
+        q.add(5);
+        
+​
+        int k = 3;
+​
+        reverseFirstK(q, k);
+​
+        while (!q.isEmpty()) {
+            System.out.print(q.peek() + " ");
+            q.poll();
+        }
+    }
+}
+
+Output
+3 2 1 4 5 
+Time Complexity: O(n+k), Where 'n' is the total number of elements in the queue and 'k' is the number of elements to be reversed. This is because firstly the k elements from the queue is emptied into the deque and then added back to the queue from the deque after that first 'n-k' elements are emptied and enqueued back to the queue.
+Auxiliary Space: O(k) , due to the deque used to store the first k elements of the queue.
+

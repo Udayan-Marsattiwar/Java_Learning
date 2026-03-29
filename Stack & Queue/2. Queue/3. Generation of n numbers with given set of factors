@@ -1,0 +1,66 @@
+Given an array of k numbers factor[], the task is to print first n numbers (in ascending order) whose factors are from the given array.
+
+Examples: 
+Input  : factor[] = {2, 3, 4, 7} 
+         n = 8
+Output : 2 3 4 6 7 8 9 10
+
+Input  :  factor[] = {3, 5, 7}
+          n = 10
+Output :  3 5 6 7 9 10 12 14 15 18
+
+This problem is mainly an extension of Ugly Number Problem. We create an auxiliary array next[] of size same as factor[] to Keep track of next multiples of factors. In Each iteration, we output the minimum element from next, then increment it by the respective factor. If the minimum value is equal to the previous output value, increment it (to avoid duplicates). Else we print the minimum value.
+
+// C++ program to generate n numbers with
+// given factors
+#include<bits/stdc++.h>
+using namespace std;
+​
+// Generate n numbers with factors in factor[]
+void generateNumbers(int factor[], int n, int k)
+{
+    // array of k to store next multiples of
+    // given factors 
+    int next[k] = {0};
+​
+    // Prints n numbers  
+    int output = 0;  // Next number to print as output 
+    for (int i=0; i<n; )
+    {
+        // Find the next smallest multiple
+        int toincrement = 0;
+        for (int j=0; j<k; j++)
+            if (next[j] < next[toincrement])
+                toincrement = j;
+​
+        // Printing minimum in each iteration
+        // print the value if output is not equal to
+        // current value(to avoid the duplicates)
+        if (output != next[toincrement])
+        {
+            output = next[toincrement];
+            printf("%d ",  next[toincrement]);
+            i++;
+        }
+​
+        // incrementing the current value by the
+        // respective factor
+        next[toincrement] += factor[toincrement];
+    }
+}
+​
+// Driver code
+int main()
+{
+    int factor[] = {3, 5, 7};
+    int n = 10;
+    int k = sizeof(factor)/sizeof(factor[0]);
+    generateNumbers(factor, n, k);
+    return 0;
+}
+Output : 
+
+3 5 6 7 9 10 12 14 15 18 
+
+Time complexity - O(n * k) 
+Auxiliary Space - O(k)

@@ -1,0 +1,191 @@
+ArrayDeque is a resizable-array implementation of the Deque interface in Java. it allows elements to be added or removed from both ends efficiently and it not allow null element insertion .
+a. ArrayDeque grows dynamically.
+b. It generally provides faster operations than LinkedList as it is more cache friendly and does not require overhead of next previous reference management.
+c. Operations like addFirst(), addLast(), removeFirst(), removeLast() are done in O(1) amortized time.
+d. ArrayDeque is not Thread-Safe
+
+-> Declaration of ArrayDeque
+In Java, the declaration of ArrayDeque can be done as:
+    ArrayDeque<Type> deque = new ArrayDeque<>();
+Here, "Type" is the type of the element the deque will hold (e.g. Integer, String).
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+​
+public class Geeks {
+    
+    public static void main(String[] args) {
+        
+        Deque<Integer> d = new ArrayDeque<>();
+        d.addFirst(1);
+        d.addLast(2);
+        int f = d.removeFirst();
+        int l = d.removeLast();
+        System.out.println("First: " + f + ", Last: " + l);
+    }
+}
+
+Output
+First: 1, Last: 2
+
+--> Hierarchy of ArrayDeque
+It implements Queue and Deque interfaces and is a part of the Collection framework.
+image attached
+
+--> Constructors of ArrayDeque
+1. ArrayDeque()
+This constructor is used to create an empty ArrayDeque and by default holds an initial capacity to hold 16 elements.
+    ArrayDeque<Integer> deque = new ArrayDeque<>();
+
+2. ArrayDeque(Collection<? extends E> c)
+This constructor is used to create an ArrayDeque containing all the elements the same as that of the specified collection.
+    ArrayDeque<Integer> deque = new ArrayDeque<>(list);
+
+3. ArrayDeque(int numofElements)
+This constructor is used to create an empty ArrayDeque and holds the capacity to contain a specified number of elements.
+    ArrayDeque<String> deque = new ArrayDeque<>(25); // capacity = 25
+
+--> Performing Various Operations on ArrayDeque
+1. Adding Element
+We can use methods like add(), addFirst(), addLast(), offer(), offerFirst(), offerLast() to insert element to the ArrayDeque.
+import java.io.*;
+import java.util.*;
+public class Geeks {
+​
+    public static void main(String[] args)
+    {
+        // Initializing a deque since deque is an interface. it is assigned the ArrayDeque class
+        Deque<String> d = new ArrayDeque<String>();
+​
+        // add() method to insert
+        d.add("The");
+        d.addFirst("To");
+        d.addLast("Geeks");
+​
+        // offer() method to insert
+        d.offer("For");
+        d.offerFirst("Welcome");
+        d.offerLast("Geeks");
+​
+        System.out.println("ArrayDeque : " + d);
+    }
+}
+
+Output
+ArrayDeque : [Welcome, To, The, Geeks, For, Geeks]
+
+2. Accessing Elements
+We can use methods like getFirst(), getLast(), peek(), peekFirst(), peekLast() to access elements of the ArrayDeque.
+import java.io.*;
+import java.util.*;
+public class Geeks {
+​
+    public static void main(String args[])
+    {
+        // Creating an empty ArrayDeque
+        ArrayDeque<String> d = new ArrayDeque<String>();
+​
+        // Using add() method to add elements into the Deque Custom input elements
+        d.add("Welcome");
+        d.add("To");
+        d.add("Geeks");
+        d.add("for");
+        d.add("Geeks");
+​
+        // Displaying the ArrayDeque
+        System.out.println("ArrayDeque: " + d);
+​
+        // Displaying the First element
+        System.out.println("The first element is: " + d.getFirst());
+​
+        // Displaying the Last element
+        System.out.println("The last element is: " + d.getLast());
+    }
+}
+
+Output
+ArrayDeque: [Welcome, To, Geeks, for, Geeks]
+The first element is: Welcome
+The last element is: Geeks
+
+3. Removing Elements
+We can use various methods like remove(), removeFirst(), removeLast(), poll(), pollFirst(), pollLast(), pop() to remove elements from the ArrayDeque.
+import java.util.*;
+public class Geeks {
+    public static void main(String[] args) {
+        
+        // Initializing a deque
+        Deque<String> d = new ArrayDeque<String>();
+​
+        // Adding elements
+        d.add("Java");
+        d.addFirst("C++");
+        d.addLast("Python");
+​
+        // Printing initial elements
+        System.out.println("Initial Deque: " + d);
+​
+        // Removing elements as a stack from top/front
+        System.out.println("Removed element using pop(): " + d.pop());
+​
+        // Removing an element from the front
+        System.out.println("Removed element using poll(): " + d.poll());
+​
+        // Removing an element from the front using pollFirst
+        System.out.println("Removed element using pollFirst(): " + d.pollFirst());
+​
+        // The deque is empty now
+        System.out.println("Final Deque: " + d);
+    }
+}
+
+Output
+Initial Deque: [C++, Java, Python]
+Removed element using pop(): C++
+Removed element using poll(): Java
+Removed element using pollFirst(): Python
+Final Deque: []
+
+4.Iterating Elements
+We can use various methods like iterator(), descendingIterator() to iterate over the elements of ArrayDeque.
+import java.util.*;
+public class Geeks {
+    public static void main(String[] args)
+    {
+        // Declaring and initializing an deque
+        Deque<String> d = new ArrayDeque<String>();
+​
+        // Adding elements at the back using add() method
+        d.add("For");
+​
+        // Adding element at the front using addFirst() method
+        d.addFirst("Geeks");
+​
+        // add element at the last using addLast() method
+        d.addLast("Geeks");
+        d.add("is so good");
+​
+        // Iterate using Iterator interface from the front of the queue
+        System.out.println("Iterating in ForwardOrder:");
+        for (Iterator i = d.iterator(); i.hasNext();) {
+​
+            System.out.print(i.next() + " ");
+        }
+​
+        System.out.println();
+​
+        // Iterate in reverse sequence in a queue
+        System.out.println("Iterating in ReverseOrder:");
+        for (Iterator i = d.descendingIterator();
+             i.hasNext();) {
+​
+            System.out.print(i.next() + " ");
+        }
+    }
+}
+
+Output
+Iterating in ForwardOrder:
+Geeks For Geeks is so good 
+Iterating in ReverseOrder:
+is so good Geeks For Geeks 

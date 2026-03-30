@@ -1,0 +1,163 @@
+Design a data structure that supports the following operations efficiently to achieve O(1) time complexity for retrieving minimum and maximum elements
+a. insert(x): Insert an element
+b. getMin(): Return the minimum element
+c. getMax(): Return the maximum element
+d. extractMin(): Remove and return the minimum element
+e. extractMax(): Remove and return the maximum element]
+
+Example:
+Input: Sequence of operations:
+insert(5)
+insert(10)
+insert(3)
+insert(15)
+insert(2)
+getMin()
+getMax()
+insert(1)
+getMin()
+insert(20)
+getMax()
+
+Output:
+
+2
+15
+1
+20
+
+-> Solution Approach
+To support constant-time min and max operations, we use three stacks:
+
+a. Main Stack – Stores all elements
+b. Min Stack – Tracks the minimum value at each level
+c Max Stack – Tracks the maximum value at each level
+
+-> Java Implementation
+class GfG {
+​
+    public static void main(String[] args) {
+​
+        MinMaxDS ds = new MinMaxDS();
+​
+        ds.insert(5);
+        ds.insert(10);
+        ds.insert(3);
+        ds.insert(15);
+        ds.insert(2);
+​
+        System.out.println(ds.getMin()); 
+        System.out.println(ds.getMax()); 
+        ds.insert(1);
+        System.out.println(ds.getMin()); 
+        ds.insert(20);
+        System.out.println(ds.getMax()); 
+​
+        System.out.println(ds.extractMin()); 
+        System.out.println(ds.extractMax()); 
+    }
+}
+
+Data Structure Implementation
+import java.util.Stack;
+
+class MinMaxDS {
+
+    private Stack<Integer> mainStack;
+    private Stack<Integer> minStack;
+    private Stack<Integer> maxStack;
+
+    MinMaxDS() {
+        mainStack = new Stack<>();
+        minStack = new Stack<>();
+        maxStack = new Stack<>();
+    }
+
+    // Insert element
+    void insert(int x) {
+        mainStack.push(x);
+
+        minStack.push(
+            minStack.isEmpty() ? x : Math.min(x, minStack.peek())
+        );
+
+        maxStack.push(
+            maxStack.isEmpty() ? x : Math.max(x, maxStack.peek())
+        );
+    }
+
+    // Get minimum element
+    int getMin() {
+        return minStack.peek();
+    }
+
+    // Get maximum element
+    int getMax() {
+        return maxStack.peek();
+    }
+
+    // Remove and return minimum element
+    int extractMin() {
+        int min = minStack.peek();
+        removeElement(min);
+        return min;
+    }
+
+    // Remove and return maximum element
+    int extractMax() {
+        int max = maxStack.peek();
+        removeElement(max);
+        return max;
+    }
+
+    // Helper method to remove a specific element
+    private void removeElement(int value) {
+        Stack<Integer> temp = new Stack<>();
+
+        while (!mainStack.isEmpty() && mainStack.peek() != value) {
+            temp.push(mainStack.pop());
+            minStack.pop();
+            maxStack.pop();
+        }
+
+        // Remove the target element
+        if (!mainStack.isEmpty()) {
+            mainStack.pop();
+            minStack.pop();
+            maxStack.pop();
+        }
+
+        // Restore elements
+        while (!temp.isEmpty()) {
+            insert(temp.pop());
+        }
+    }
+}
+Output:
+
+2
+15
+1
+20
+1
+20
+
+Explanation:
+a. The data structure uses three stacks: a main stack to store all elements, a min stack to track minimum values, and a max stack to track maximum values.
+b. Every inserted element is pushed onto the main stack, while the min and max stacks store the minimum and maximum values up to that point.
+c. The top of the min stack always represents the current minimum element in the data struct
+d. The top of the max stack always represents the current maximum element in the data structure.
+e. The getMin() and getMax() operations return these values in O(1) time by simply accessing the top of the respective stacks.
+f. The extractMin() and extractMax() operations remove the required element and rebuild the stacks to maintain correct min and max tracking.
+
+-> Time Complexity Analysis
+Operation      Time Complexity
+
+insert          O(1)
+getMin          O(1)
+getMax          O(1)
+extractMin      O(n)
+extractMax      O(n)
+
+Note:
+True O(1) removal of both minimum and maximum elements is not possible using stacks alone. This solution guarantees O(1) access to minimum and maximum values with correct behavior.

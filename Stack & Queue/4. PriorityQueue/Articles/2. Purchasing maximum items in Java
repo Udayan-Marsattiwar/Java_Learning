@@ -1,0 +1,52 @@
+Given an array of item costs and a total sum, determine the maximum number of items that can be purchased without exceeding the given sum.
+
+Example:
+Input: costs[] = {8, 3, 6, 2, 15}, sum = 14
+Output: 3
+Explanation: The maximum number of items that can be bought within the budget is 3 (items with cost 2, 3, and 6).
+
+Approach
+To maximize the number of items that can be purchased, we should first buy the cheapest items. This can be efficiently achieved using a Min Heap (Priority Queue).
+a. Insert all item costs into a Min Heap (PriorityQueue).
+b. Extract the minimum cost items one by one until the sum is exhausted.
+c. Keep a counter to track the number of items purchased.
+d. Return the count as the maximum number of items that can be purchased within the given sum.
+
+import java.util.*;
+​
+class GFG {
+​
+    static int maxItems(int[] cost, int sum) {
+​
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+​
+        for (int x : cost) {
+            pq.add(x);
+        }
+​
+        int count = 0;
+​
+        while (!pq.isEmpty() && sum >= pq.peek()) {
+            sum -= pq.poll();
+            count++;
+        }
+​
+        return count;
+    }
+​
+    public static void main(String[] args) {
+​
+        int[] cost = {1, 12, 5, 111, 200};
+        int sum = 10;
+​
+        System.out.println(maxItems(cost, sum));
+    }
+}
+
+Output
+2
+Explanation:
+a. All item costs are inserted into the PriorityQueue pq, which automatically maintains the minimum element at the top.
+b. The while loop continues as long as the queue is not empty and the cheapest item (pq.peek()) can be afforded within the remaining sum.
+c. Inside the loop, the cheapest item is removed using pq.poll() and its cost is subtracted from sum.
+e. Each successful purchase increments count, which is returned as the maximum number of items that can be bought.

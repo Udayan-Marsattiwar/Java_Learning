@@ -1,0 +1,132 @@
+Given an array of integers, we need to print k most frequent elements. If there is a tie, we need to prefer the elements whose first appearance is first.
+
+Examples: 
+Input : arr[] = {10, 5, 20, 5, 10, 10, 30}, k = 2 
+Output : 10 5
+
+Input : arr[] = {7, 7, 6, 6, 6, 7, 5, 4, 4, 10, 5}, k = 3 
+Output : 7 6 5 
+Explanation : 
+In this example, 7 and 6 have the same frequencies. We print 7 first because the first appearance of 7 is first. Similarly, 5 and 4 have the same frequencies. We prefer 5 because 5's first appearance is first.
+
+We have discussed two methods in the post below. 
+Find k numbers with most occurrences in         the given array
+Let us first talk about a simple solution that prints in any order in the case of a tie. Then we will discuss the solution that takes of the order.
+
+The idea is to use hashing with frequency indexing. We first store counts in a hash. Then we traverse through the hash and use frequencies as the index to store elements with given frequencies. The important factor here is, the maximum frequency can be n. So an array of size n+1 would be good.
+
+// Java implementation to find k elements with max occurrence.
+import java.util.*;
+public class KFrequentNumbers {
+    static void print_N_mostFrequentNumber(int[] arr, int n, int k)
+    {
+        Map<Integer, Integer> mp = new HashMap<Integer, Integer>();
+​
+        // Put count of all the distinct elements in Map
+        // with element as the key & count as the value.
+        for (int i = 0; i < n; i++) {
+​
+            // Get the count for the element if already
+            // present in the Map or get the default value
+            // which is 0.
+            mp.put(arr[i], mp.getOrDefault(arr[i], 0) + 1);
+        }
+​
+        // Initialize an array list of array lists
+        List<List<Integer> > freq = new ArrayList<List<Integer> >();
+        for (int i = 0; i <= n; i++)
+            freq.add(new ArrayList<Integer>());
+​
+        // Use frequencies as indexes and add corresponding
+        // values to the list
+        for (Map.Entry<Integer, Integer> x : mp.entrySet())
+            freq.get(x.getValue()).add(x.getKey());
+​
+        // Traverse freq[] from right side.
+        int count = 0;
+        for (int i = n; i >= 0; i--) {
+            for (int x : freq.get(i)) {
+                System.out.println(x);
+                count++;
+                if (count == k)
+                    return;
+            }
+        }
+    }
+​
+    // Driver Code to test the code.
+    public static void main(String[] args)
+    {
+        int arr[] = { 3, 1, 4, 4, 5, 2, 6, 1 };
+        int n = arr.length;
+        int k = 2;
+        print_N_mostFrequentNumber(arr, n, k);
+    }
+}
+
+Output
+4 1
+Time Complexity: O(n) 
+Auxiliary Space: O(n) 
+ 
+Printing according to the first appearance. To keep the required order, we traverse the original array instead of the map. To avoid duplicates, we need to mark processed entries as -1 on the map.
+
+// Java implementation to find k elements with max occurrence.
+import java.util.*;
+public class KFrequentNumbers {
+    static void print_N_mostFrequentNumber(int[] arr, int n, int k)
+    {
+        Map<Integer, Integer> mp = new HashMap<Integer, Integer>();
+​
+        // Put count of all the distinct elements in Map
+        // with element as the key & count as the value.
+        for (int i = 0; i < n; i++) {
+​
+            // Get the count for the element if already
+            // present in the Map or get the default value
+            // which is 0.
+            mp.put(arr[i], mp.getOrDefault(arr[i], 0) + 1);
+        }
+​
+        // Initialize an array list of array lists
+        List<List<Integer> > freq = new ArrayList<List<Integer> >();
+        for (int i = 0; i <= n; i++)
+            freq.add(new ArrayList<Integer>());
+​
+        // Use frequencies as indexes and add corresponding
+        // values to the list
+        for (int i = 0; i < n; i++) {
+            int f = mp.get(arr[i]);
+            if (f != -1) {
+                freq.get(f).add(arr[i]);
+                mp.put(arr[i], -1);
+            }
+        }
+​
+        // Traverse freq[] from right side.
+        int count = 0;
+        for (int i = n; i >= 0; i--) {
+            for (int x : freq.get(i)) {
+                System.out.println(x);
+                count++;
+                if (count == k)
+                    return;
+            }
+        }
+    }
+​
+    // Driver Code to test the code.
+    public static void main(String[] args)
+    {
+        int arr[] = { 3, 1, 4, 4, 5, 2, 6, 1 };
+        int n = arr.length;
+        int k = 3;
+        print_N_mostFrequentNumber(arr, n, k);
+    }
+}
+
+Output
+1 4 3
+Time Complexity: O(n) 
+Auxiliary Space: O(n)
+

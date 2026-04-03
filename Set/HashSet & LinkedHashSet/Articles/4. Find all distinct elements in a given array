@@ -1,0 +1,123 @@
+Given an integer array arr[], find all the distinct elements of the given array. The given array may contain duplicates and the output should contain every element only once.
+
+Examples: 
+Input: arr[] = [2, 2, 3, 3, 7, 5]
+Output: [2, 3, 7, 5]
+Explanation : After removing the duplicates 2 and 3 we get 2 3 7 5.
+
+Input: arr[] = [1, 2, 3, 4, 5]
+Output: [1, 2, 3, 4, 5]
+Explanation : There doesn't exists any duplicate element. 
+
+-> Table of Content
+[Naive Approach] Using Nested loops - O(n^2) Time and O(1) Space
+[Better Approach] Using Sorting - O(n*logn) Time and O(1) Space
+[Expected Approach] Using Hashset - O(n) Time and O(n) Space
+
+1. [Naive Approach] Using Nested loops - O(n^2) Time and O(1) Space
+The idea is to use two nested loops. The outer loop picks an element one by one starting from the leftmost element. The inner loop checks if the element is present on left side of it. If present, then ignore the element, else store it in result. 
+import java.util.Arrays;
+import java.util.ArrayList;
+​
+class GFG {
+    public ArrayList<Integer> remDuplicate(int[] arr) {
+        ArrayList<Integer> res = new ArrayList<>();
+​
+        for (int i = 0; i < arr.length; i++) {
+​
+            // Check if this element is included in result
+            int j;
+            for (j = 0; j < i; j++)
+                if (arr[i] == arr[j])
+                    break;
+​
+            // Include this element if not included previously
+            if (i == j)
+                res.add(arr[i]);
+        }
+        return res;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {2, 2, 3, 3, 7, 5};
+      
+        ArrayList<Integer> res = remDuplicate(arr);
+        for (int val : res) {
+            System.out.print(val + " ");
+        }
+    }
+}
+
+Output
+2 3 7 5 
+
+2. [Better Approach] Using Sorting - O(n*logn) Time and O(1) Space
+The idea is to sort the array so that all occurrences of every element become consecutive. Once the occurrences become consecutive, we can traverse the sorted array and print distinct elements by ignoring elements if they are same as the previous element.
+import java.util.Arrays;
+import java.util.ArrayList;
+​
+class GFG {
+    public ArrayList<Integer> remDuplicate(int[] arr) {
+        ArrayList<Integer> res = new ArrayList<>();
+        int n = arr.length;
+​
+        // First sort the array so that all occurrences 
+        // become consecutive
+        Arrays.sort(arr);
+​
+        for (int i = 0; i < n; i++) {
+            
+            // Store elements only if they are different 
+            // from previous element
+            if (i == 0 || arr[i] != arr[i - 1]) {
+                res.add(arr[i]);
+            }
+        }
+        return res;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {2, 2, 3, 3, 7, 5};
+​
+        ArrayList<Integer> res = remDuplicate(arr);
+        for (int ele : res) {
+            System.out.print(ele + " ");
+        }
+    }
+}
+
+Output
+2 3 5 7 
+
+3. [Expected Approach] Using Hashset - O(n) Time and O(n) Space
+We can use Hashset to store distinct element. The idea is to insert all the elements in a hash set and then traverse the hash set to store the distinct elements in the resultant array.
+import java.util.HashSet;
+import java.util.ArrayList;
+​
+class GFG {
+​
+    public ArrayList<Integer> remDuplicate(int[] arr) {
+        
+        // Initialize set with all elements of array
+        HashSet<Integer> st = new HashSet<>();
+        for (int num : arr) {
+            st.add(num);
+        }
+        
+        // Return the result array by inserting all 
+        // elements from hash set
+        return new ArrayList<>(st);
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {2, 2, 3, 3, 7, 5};
+        
+        ArrayList<Integer> res = remDuplicate(arr);
+        for (int ele : res) {
+            System.out.print(ele + " ");
+        }
+    }
+}
+
+Output
+5 7 3 2 

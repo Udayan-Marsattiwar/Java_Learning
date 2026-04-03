@@ -1,0 +1,220 @@
+Given two arrays a[] and b[], find their intersection — the unique elements that appear in both. Ignore duplicates, and the result can be in any order.
+
+Input: a[] = [1, 2, 1, 3, 1], b[] = [3, 1, 3, 4, 1]
+Output: [1, 3]
+Explanation: 1 and 3 are the only common elements and we need to print only one occurrence of common elements
+
+Input: a[] = [1, 1, 1], b[] = [1, 1, 1, 1, 1]
+Output: [1]
+Explanation: 1 is the only common element present in both the arrays.
+
+Input: a[] = [1, 2, 3], b[] = [4, 5, 6]
+Output: []
+Explanation: No common element in both the arrays.
+
+Table of Content
+[Naive Approach] Using Triple Nested Loops - O(n × n × m) Time and O(1) Space
+[Better Approach] Using Nested Loops and Hash Set - O(n × m) Time and O(n) Space
+[Expected Approach 1] Using Two Hash Sets - O(n+m) Time and O(n) Space
+[Expected Approach 2] Using One Hash Set - O(n+m) Time and O(n) Space
+
+-> [Naive Approach] Using Triple Nested Loops - O(n × n × m) Time and O(1) Space
+The idea is to find all unique elements that appear in both arrays by checking each element of one array against the other and ensuring no duplicates are added to the result.
+
+Step By Step Implementation:
+a. Initialize an empty array for result.
+b. Traverse through a[] and for every element check if it is in b[], then check if it is already in result or not. If in b[] and not in result, then add it to the result.
+c. Return result.
+
+import java.util.ArrayList;
+​class GfG {
+​    static ArrayList<Integer> intersect(int[] a, int[] b) {
+        ArrayList<Integer> res = new ArrayList<>();
+​
+        // Traverse through a[] and
+        // search every element a[i] in b[]
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b.length; j++) {
+​
+                // If found, check if the element 
+                // is already in the result
+                if (a[i] == b[j]) {
+                    if (!res.contains(a[i])) {
+                        res.add(a[i]);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+​
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3, 2, 1};
+        int[] b = {3, 2, 2, 3, 3, 2};
+​
+        ArrayList<Integer> res = intersect(a, b);
+​
+        for (int val : res) {
+            System.out.print(val + " ");
+        }
+    }
+}
+
+Output
+2 3 
+
+-> [Better Approach] Using Nested Loops and Hash Set - O(n × m) Time and O(n) Space
+The idea is to find common elements between two arrays without duplicates by:|
+– Using a hash set to track already added elements,
+– Checking each element of a[] against b[], and only adding it to the result if it's present in b[] and not already recorded.
+
+Step By Step Implementation:
+a. Initialize an empty hash set for storing result array elements
+b. Traverse through a[] and for every element check if it is in b[], then check if it is already in result or not. If in b[] and not in the hash set, then add it to the hash set.
+c. Create a result array and copy items of the hash set to the result array and return the result array.
+
+import java.util.ArrayList;
+import java.util.HashMap;
+​class GfG {
+    static ArrayList<Integer> intersect(int[] a, int[] b) {
+        ArrayList<Integer> res = new ArrayList<>();
+        HashMap<Integer, Integer> seen = new HashMap<>();
+​
+        // Traverse through a[] and search every element
+        // a[i] in b[]
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < b.length; j++) {
+​
+                // If found, check if the element is already 
+                // in the result to avoid duplicates
+                if (a[i] == b[j] && !seen.containsKey(a[i])) {
+                    seen.put(a[i], 1);
+                    res.add(a[i]);
+                }
+            }
+        }
+​
+        return res;
+    }
+​
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3, 2, 1};
+        int[] b = {3, 2, 2, 3, 3, 2};
+​
+        ArrayList<Integer> res = intersect(a, b);
+​
+        for (int x : res)
+            System.out.print(x + " ");
+    }
+}
+
+Output
+2 3 
+
+-> [Expected Approach 1] Using Two Hash Sets - O(n+m) Time and O(n) Space
+The idea is to use hash sets to efficiently find the unique elements that are common to both arrays. One set (as) stores elements from the first array, and the other (rs) ensures each common element is added only once to the result.
+
+Step By Step Implementations:
+a. Initialize an empty array for result
+b. Create a hash set as (Set of a[] elements) and put all distinct items of a[] into it. For example, if array is [1, 2, 1, 3, 1], as is going to store [1, 2, 3]
+c. Create an empty hash set for result rs (Set of result elements)
+d. Create an empty array res[] to store result
+e. Traverse through all items of b[]. If an item is in as and not in rs, then add it to res[] and rs
+f.Return res[]
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+​class GfG {
+    static ArrayList<Integer> intersect(ArrayList<Integer> a, 
+                                        ArrayList<Integer> b) {
+      
+        // Put all elements of a[] in as
+        Set<Integer> as = new HashSet<>(a);  
+      
+        Set<Integer> rs = new HashSet<>();                    
+        ArrayList<Integer> res = new ArrayList<>();                            
+​
+        // Traverse through b[]
+        for (int i = 0; i < b.size(); i++) {
+          
+            // If the element is in as and not yet in rs
+            // a) Add it to the result set
+            // b) Add it to the result array
+            if (as.contains(b.get(i)) && 
+                !rs.contains(b.get(i))) {
+                rs.add(b.get(i)); 
+                res.add(b.get(i)); 
+            }
+        }
+​
+        return res;
+    }
+​
+    public static void main(String[] args) {
+        ArrayList<Integer> a = new ArrayList<>(Arrays.asList(1, 2, 3, 2, 1));
+        ArrayList<Integer> b = new ArrayList<>(Arrays.asList(3, 2, 2, 3, 3, 2));
+​
+        ArrayList<Integer> res = intersect(a, b);
+      
+        for (int i = 0; i < res.size(); i++) 
+            System.out.print(res.get(i) + " ");
+    }
+}
+
+Output
+3 2 
+
+-> [Expected Approach 2] Using One Hash Set - O(n+m) Time and O(n) Space
+We can optimize the above approach by avoiding creation of rs hash set. To make sure that duplicates are not added, we simply delete items from as (Set of a[] elements) rather than checking with rs.
+
+import java.util.HashSet;
+import java.util.ArrayList;
+​class GfG {
+​
+    // Function to find intersection of two arrays
+    static ArrayList<Integer> intersect(int[] a, int[] b) {
+      
+        // Put all elements of a[] in sa
+        HashSet<Integer> sa = new HashSet<>();
+        for (int num : a) {
+            sa.add(num);
+        }
+​
+        ArrayList<Integer> res = new ArrayList<>();
+​
+        // Traverse through b[]
+        for (int num : b) {
+          
+            // If the element is in sa
+            if (sa.contains(num)) {
+                res.add(num);          // Add it to the result array
+                sa.remove(num);        // Erase it from sa to avoid duplicates
+            }
+        }
+​
+        return res;
+    }
+​
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3, 2, 1};
+        int[] b = {3, 2, 2, 3, 3, 2};
+​
+        ArrayList<Integer> res = intersect(a, b);
+​
+        for (int val : res) {
+            System.out.print(val + " ");
+        }
+    }
+}
+
+Output
+3 2 
+Related Articles:
+
+Intersection of Two Arrays with Distinct Elements
+Intersection of Two Sorted Arrays
+Intersection of Two Sorted Arrays with Distinct Elements
+Union and Intersection of Two Unsorted Arrays
+Union and Intersection of Two Sorted Arrays

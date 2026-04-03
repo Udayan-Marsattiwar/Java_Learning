@@ -1,0 +1,115 @@
+Given an array arr[] of integers, for every element in the array find the closest greater element on its right. If there is no greater element then print -1.
+
+Examples: 
+Input : arr[] = [10, 5, 11, 10, 20, 12] 
+Output : [11, 10, 12, 12, -1, -1]
+
+Input : arr[] = [50, 20, 200, 100, 30] 
+Output : [100, 30, -1, -1 ,-1 ]
+
+Table of Content
+[Naive Approach] Using Two Loops - O(n^2) Time and O(1) Space
+[Expected Approach] Using Ordered Set - O(nlogn) Time and O(n) Space
+
+-> [Naive Approach] Using Two Loops - O(n2) Time and O(1) Space
+For each element in the array, examine all elements to its right and consider only those that are greater than the current element. Among these greater elements, choose the one with the minimum value, as it is the closest greater element in terms of value.
+
+If no element greater than the current one exists on its right, the result for that element is -1
+import java.util.ArrayList;
+​
+class GFG {
+​
+    static ArrayList<Integer> closestGreater(int arr[], int n)
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // Initialize result with -1
+        for (int i = 0; i < n; i++)
+            result.add(-1);
+​
+        // For each element, check all elements on the right
+        for (int i = 0; i < n; i++) {
+            int mnGreater = Integer.MAX_VALUE;
+​
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] > arr[i] && arr[j] < mnGreater) {
+                    mnGreater = arr[j];
+                }
+            }
+​
+            if (mnGreater != Integer.MAX_VALUE)
+                result.set(i, mnGreater);
+        }
+​
+        return result;
+    }
+​
+    // Driver code
+    public static void main(String[] args)
+    {
+        int arr[] = {10, 5, 11, 10, 20, 12};
+        int n = arr.length;
+​
+        ArrayList<Integer> ans = closestGreater(arr, n);
+​
+        // Print result
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+
+Output
+11 10 12 12 -1 -1 
+
+-> [Expected Approach] Using Ordered Set - O(nlogn) Time and O(n) Space
+This approach optimizes the previous idea by avoiding repeated scans.
+
+Instead of checking all elements on the right for every array element, we use an ordered set to maintain the elements seen so far while traversing the array from right to left.
+    For each element, the ordered set allows us to efficiently find the smallest element strictly greater than the current one in logarithmic time.
+
+If such an element exists, it is the closest greater element; otherwise, the answer is -1.
+
+import java.util.ArrayList;
+import java.util.TreeSet;
+​
+class GFG {
+​
+    static ArrayList<Integer> closestGreater(int arr[], int n)
+    {
+        TreeSet<Integer> s = new TreeSet<>();
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // Initialize result with -1
+        for (int i = 0; i < n; i++)
+            result.add(-1);
+​
+        // Traverse from right to left
+        for (int i = n - 1; i >= 0; i--) {
+            // Find the smallest strictly greater element
+            Integer it = s.higher(arr[i]);
+            if (it != null)
+                result.set(i, it);
+​
+            // Insert current element into the set
+            s.add(arr[i]);
+        }
+​
+        return result;
+    }
+​
+    // Driver code
+    public static void main(String[] args)
+    {
+        int arr[] = {10, 5, 11, 10, 20, 12};
+        int n = arr.length;
+​
+        ArrayList<Integer> ans = closestGreater(arr, n);
+​
+        // Print result
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+
+Output
+11 10 12 12 -1 -1

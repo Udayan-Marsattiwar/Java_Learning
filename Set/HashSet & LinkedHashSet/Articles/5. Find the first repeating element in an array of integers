@@ -1,0 +1,101 @@
+Given an array of integers arr[], The task is to find the index of first repeating element in it i.e. the element that occurs more than once and whose index of the first occurrence is the smallest. 
+
+Examples: 
+Input: arr[] = {10, 5, 3, 4, 3, 5, 6}
+Output: 5 
+Explanation: 5 is the first element that repeats
+
+Input: arr[] = {6, 10, 5, 4, 9, 120, 4, 6, 10}
+Output: 6 
+Explanation: 6 is the first element that repeats
+
+-> Naive Approach - O(n^2) Time and O(1) Space
+Run two nested loops, the outer loop picks an element one by one, and the inner loop checks whether the element is repeated or not. Once a repeating element is found, break the loops and print the element.
+
+// Java program to find first repeating element
+// using Naive approach in O(n^2) Time and O(1) Space
+import java.util.*;
+​
+class GfG {
+  
+    // Function to find the index of first repeating element in an array
+    static int firstRepeatingElement(int[] arr, int n) {
+        // Nested loop to check for repeating elements
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                // If a repeating element is found, return its index
+                if (arr[i] == arr[j]) {
+                    return i;
+                }
+            }
+        }
+        // If no repeating element is found, return -1
+        return -1;
+    }
+​
+    // Driver code
+    public static void main(String[] args) {
+      
+        // Initializing an array and its size
+        int[] arr = { 10, 5, 3, 4, 3, 5, 6 };
+        int n = arr.length;
+      
+        // Finding the index of first repeating element
+        int index = firstRepeatingElement(arr, n);
+​
+        // Checking if any repeating element is found or not
+        if (index == -1) {
+            System.out.println("No repeating element found!");
+        }
+        else {
+            System.out.println("First repeating element is " + arr[index]);
+        }
+    }
+}
+
+Output
+First repeating is 5
+
+-> Expected Approach - Hash Set - O(n) Time and O(n) Space
+Follow the steps below to implement the idea:
+a. Initialize an empty Hash Set s
+b. Run a for loop for each index i
+    1. If the current element is present in the hash set, then return i
+    2. Else insert arr[i] in s. 
+c. Return -1 if no repeating element found
+Below is the implementation of the above approach.
+
+// Java program to find first repeating element
+// using Hash Set in O(n) Time and O(n) Space
+import java.util.*;
+​
+class GfG {
+    static int firstRepeatingElement(int[] arr) {
+        HashSet<Integer> s = new HashSet<>();
+​
+        // If an element is already present, return it
+        // else insert it
+        int minEle = Integer.MAX_VALUE;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            if (s.contains(arr[i])) {
+                minEle = Math.min(minEle, i);
+            }
+            s.add(arr[i]);
+        }
+        
+        // If no element repeats
+        return minEle == Integer.MAX_VALUE ? -1 : minEle;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {10, 5, 3, 4, 3, 5, 6};
+        int index = firstRepeatingElement(arr);
+        if (index == -1)
+            System.out.println("No repeating found!");
+        else
+            System.out.println("First repeating is " + arr[index]);
+    }
+}
+
+Output
+First repeating is 5

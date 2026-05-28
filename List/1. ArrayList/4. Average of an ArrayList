@@ -1,0 +1,32 @@
+You are given a ArrayList list[] that contains integers. You need to return average of the non-negative integers.
+
+Examples:
+
+Input: list = [-12, 8, -7, 6, 12, -9, 14]
+Output: 10.0
+Explanation: The positive numbers are 8 6 12 14. The sum is 8+6+12+14 = 40, Average = 40/4 = 10.0
+Input: list = [1, 2, 3]
+Output: 2.0
+Explanation: The positive numbers are 1 2 3. The sum is 1+2+3 = 6, Average = 6/3 = 2.0
+Constraints:
+1  <=  list.size()  <=  105
+
+
+// User function Template for Java
+class Solution {
+    // function should calculate and return the
+    // average of all the non negative integers
+    // from the arraylist provided in the
+    // parameter
+    public static double posAverage(ArrayList<Integer> list) {
+        double sum =0, count =0;
+        for(int i=0; i< list.size(); i++){
+            if(list.get(i) >= 0){
+                count++;
+                sum = sum + list.get(i);
+            }    
+        }
+        double avg = sum/count;
+        return avg;
+    }
+}

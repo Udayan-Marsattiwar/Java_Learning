@@ -1,0 +1,24 @@
+Given an integer array arr[]. The task is to find the sum of the array using streams.
+
+Examples :
+
+Input: 1 2 3 4
+Output: 10
+Explanation: 1+2+3+4 = 10
+Input: 3 2 1
+Output: 6
+Explanation: 3+2+1 = 6
+Constraints:
+1 <= arr.length <= 1000
+1 <= arr[i] <= 1000
+
+
+import java.util.LinkedList;
+class Solution {
+    public static int sumUsingStreams(int[] arr) {
+        // code here
+        int sum = Arrays.stream(arr)
+                        .sum();
+        return sum;
+    }
+}

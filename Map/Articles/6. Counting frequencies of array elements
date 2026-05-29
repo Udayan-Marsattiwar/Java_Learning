@@ -1,0 +1,173 @@
+Given an array arr[] of non-negative integers which may contain duplicate elements. Return the frequency of each distinct element present in the array.
+Examples: 
+
+Input:  arr[] = [10, 20, 10, 5, 20]
+Output: [[5, 1], [10, 2], [20, 2]]
+Explanation: Here 5 occurs once, 10 occurs 2 times and 20 occurs 2 times.
+
+Input: arr[] = [10, 20, 20]
+Output: [[10, 1], [20, 2]] 
+Explanation: Here 10 occurs 1 time, 20 occurs 2 times.
+
+-> Table of Content
+[Naive Approach] Brute Force - O(n^2) Time O(n) Space
+[Better Approach] Using binary search
+[Expected Solution] Using hashing - O(n) Time and O(n) Space
+
+-> [Naive Approach] Brute Force - O(n2) Time O(n) Space
+A simple solution is to run two loops. For every item count number of times, it occurs. To avoid duplicate printing, keep track of processed items.
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+​
+public class GfG {
+    public static ArrayList<ArrayList<Integer>> countFreq(int[] arr) {
+        int n = arr.length;
+        
+        // Mark all array elements as not visited
+        boolean[] visited = new boolean[n];
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            
+            // Skip this element if already processed
+            if (visited[i])
+                continue;
+            int count = 1;
+            
+            // store the frequency
+            for (int j = i + 1; j < n; j++) {
+                if (arr[i] == arr[j]) {
+                    visited[j] = true;
+                    count++;
+                }
+            }
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.add(arr[i]);
+            temp.add(count);
+            ans.add(temp);
+        }
+        return ans;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 10, 5, 20};
+        ArrayList<ArrayList<Integer>> ans = countFreq(arr);
+        Collections.sort(ans, new Comparator<ArrayList<Integer>>() {
+            public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
+                return Integer.compare(a.get(0), b.get(0));
+            }
+        });
+        for (ArrayList<Integer> x : ans) {
+            System.out.println(x.get(0) + " " + x.get(1));
+        }
+    }
+}
+
+Output
+5 1
+10 2
+20 2
+
+-> [Better Approach] Using binary search
+We can find frequency of array elements using Binary search function . First we will sort the array for binary search . Our frequency of element will be '(last occ - first occ) + 1' of a element in a array.
+
+import java.util.ArrayList;
+import java.util.Arrays;
+​
+public class GFG {
+    public static ArrayList<ArrayList<Integer>> countFreq(int[] arr) {
+        Arrays.sort(arr);
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        int n = arr.length;
+        int i = 0;
+        while (i < n) {
+            int current = arr[i];
+            int firstIndex = i;
+            int lastIndex = i;
+​
+            // Find lastIndex by moving forward
+            while (lastIndex + 1 < n && 
+            arr[lastIndex + 1] == current)
+                lastIndex++;
+                
+            // Calculate frequency
+            int fre = lastIndex - firstIndex + 1; 
+            
+            // Store in ans as ArrayList
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.add(current);
+            temp.add(fre);
+            ans.add(temp);
+            
+             // Skip counted elements
+            i = lastIndex + 1;
+        }
+        return ans;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 5, 10, 20};
+        ArrayList<ArrayList<Integer>> ans = countFreq(arr);
+        for (ArrayList<Integer> x : ans) {
+            System.out.println(x.get(0) + " " + x.get(1));
+        }
+    }
+}
+
+Output
+5 1
+10 2
+20 2
+Time Complexity: O(n × log2n) , where O(log2n) time for binary search function.
+Auxiliary Space: O(1), as using constant extra space
+
+-> [Expected Solution] Using hashing - O(n) Time and O(n) Space
+An efficient solution  is using  a hash map (e.g. unordered_map in C++, HashMap in Java, dict in Python, or Dictionary in C#), we can store elements as keys and their frequencies as values.
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+​
+public class GfG {
+​
+    public static ArrayList<ArrayList<Integer>> countFreq(int[] arr) {
+        
+        // stores frequency of each number
+        HashMap<Integer, Integer> mp = new HashMap<>();
+        // stores {number, frequency}
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+​
+        // count frequency using HashMap
+        for (int num : arr) {
+            mp.put(num, mp.getOrDefault(num, 0) + 1);
+        }
+​
+        // build the answer list from the frequency map
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            ArrayList<Integer> temp = new ArrayList<>();
+            temp.add(entry.getKey());
+            temp.add(entry.getValue());
+            ans.add(temp);
+        }
+​
+        return ans;
+    }
+​
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 10, 5, 20};
+​
+        ArrayList<ArrayList<Integer>> ans = countFreq(arr);
+​
+        // sort the result in ascending order of the number
+        ans.sort((a, b) -> Integer.compare(a.get(0), b.get(0)));
+​
+        for (ArrayList<Integer> x : ans) {
+            System.out.println(x.get(0) + " " + x.get(1));
+        }
+    }
+}
+
+Output
+5 1
+10 2
+20 2

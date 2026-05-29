@@ -1,0 +1,137 @@
+Design a data structure to store user IDs and their corresponding balances in an e-Wallet system. The data structure must support insertion, update, and retrieval of balances using user IDs through the following operations.
+
+• set(user id, balance):Inserts a new user ID with the given balance if it does not exist, or updates the existing balance if the user ID is already present.
+• get(user id): This method will return the balance corresponding to the given user id.
+Example:
+Input:
+  set(1, 100)
+  set(2, 2000)
+  get(1)
+  set(1, 5000)
+  get(1)
+  get(2)
+
+  Output:
+  1 -> 100
+  1 -> 5000
+  2 -> 2000
+
+-> Naive Approach
+Follow the below steps to store and manage user balances using a list.
+• Create a User class with fields id and balance, and a constructor to initialize them.
+• Maintain an ArrayList<User> in the UserList class to store all user objects.
+• set(id, balance): Update balance if user exists; otherwise, add a new user.
+• get(id): Return balance if user exists; otherwise, return -1.
+• Use set() and get() in the main method to manage user balances.
+
+import java.util.*;
+​
+class User {
+    int id, balance;
+​
+    User(int i, int b) {
+        id = i;
+        balance = b;
+    }
+}
+​
+// UserList class to maintain a list of users
+class UserList {
+    ArrayList<User> list;
+​
+    UserList() { list = new ArrayList<>(); }
+​
+    // Get balance for a given user ID
+    int get(int id) {
+        for (User u : list) {
+            if (u.id == id) return u.balance;
+        }
+        return -1; 
+    }
+​
+    // Add new user or update balance if user exists
+    void set(int id, int balance) {
+        for (User u : list) {
+            if (u.id == id) {
+                
+                // Update existing user
+                u.balance = balance; 
+                return;
+            }
+        }
+        
+        // Add new user
+        list.add(new User(id, balance)); 
+    }
+}
+​
+class GfG {
+    public static void main(String[] args) {
+        UserList users = new UserList();
+​
+        users.set(1, 100);  
+        users.set(2, 2000);  
+​
+        System.out.println(users.get(1));
+​
+        users.set(1, 5000); 
+        System.out.println(users.get(1));
+        System.out.println(users.get(2)); 
+    }
+}
+
+Output
+100
+5000
+2000
+
+-> Efficient Approach Using HashMap
+Follow the below steps to store and manage user balances using a HashMap.
+• Create a UserList class with a HashMap<Integer, Integer> to store user IDs as keys and balances as values.
+• Initialize the HashMap in the constructor.
+• set(id, balance): insert a new entry or update the balance for the given user ID.
+• get(id): retrieve and return the balance for the given user ID.
+• In the main method, use set() to add/update users and get() to fetch their balances.
+
+import java.util.*;
+​
+class UserList {
+​
+    HashMap<Integer, Integer> map;
+​
+    // Constructor initializes the HashMap
+    UserList() { 
+        map = new HashMap<>(); 
+    }
+​
+    // Get balance for a given user ID
+    int get(int id) { 
+        return map.get(id); 
+    }
+​
+    // Add new user or update balance if user exists
+    void set(int id, int balance) { 
+        map.put(id, balance); 
+    }
+}
+​
+class GfG {
+​
+    public static void main(String args[]) {
+        UserList users = new UserList();
+​
+        users.set(1, 100);  
+        users.set(2, 2000);  
+​
+        System.out.println(users.get(1)); 
+​
+        users.set(1, 5000);  
+        System.out.println(users.get(1)); 
+        System.out.println(users.get(2)); 
+    }
+}
+
+Output
+100
+5000
+2000

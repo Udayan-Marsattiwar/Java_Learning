@@ -1,0 +1,95 @@
+Given an array of integers, determine the number of occurrences of each distinct element and output them in the same sequence in which they first appear in the array.
+Example:
+
+Input: arr[] = {10, 10, 20, 20, 20, 10, 10}
+Output: 10 4
+        20 2
+
+-> Method 1: Using HashMap
+A HashMap can be utilized to count the occurrences of each element while iterating through the array. Since a HashMap does not preserve the insertion order, an extra traversal of the array is required to ensure elements are printed in their original sequence.
+Approach:
+1. Create a HashMap<Integer, Integer> to store each element of the array along with its frequency.
+2. Traverse the array once and update the frequency of each element in the HashMap.
+3. Since HashMap does not maintain insertion order, traverse the array again to preserve the order of first appearance.
+4. During the second traversal, print the element and its frequency only if it has not been printed earlier.
+5. After printing an element, mark it as processed by updating its value in the HashMap to -1.
+6. This ensures that each element is printed only once and in the same order as it appears in the array.
+
+import java.util.*;
+​
+class GfG {
+​
+    static void printFrequencies(int arr[]) {
+        HashMap<Integer, Integer> freqMap = new HashMap<>();
+​
+        // First traversal: count frequencies
+        for (int i = 0; i < arr.length; i++) {
+            freqMap.put(arr[i],
+                        freqMap.getOrDefault(arr[i], 0) + 1);
+        }
+​
+        // Second traversal: print in original order
+        for (int i = 0; i < arr.length; i++) {
+            int freq = freqMap.get(arr[i]);
+​
+            if (freq != -1) {
+                System.out.println(arr[i] + " " + freq);
+                freqMap.put(arr[i], -1); // mark as printed
+            }
+        }
+    }
+​
+    public static void main(String args[]) {
+        int arr[] = { 5, 7, 5, 3, 7, 7 };
+        printFrequencies(arr);
+    }
+}
+
+Output
+5 2
+7 3
+3 1
+
+Method 2: Using LinkedHashMap
+A LinkedHashMap preserves the order in which elements are inserted while allowing fast access. Because of this property, elements are automatically stored in the same order as their first occurrence, removing the need for an additional traversal.
+Approach:
+1. Create a LinkedHashMap<Integer, Integer> to store array elements along with their frequencies.
+2. Traverse the array once and update the frequency of each element in the LinkedHashMap.
+3. Since LinkedHashMap preserves the order of insertion, elements are stored in the order of their first occurrence.
+4. Iterate over the entries of the LinkedHashMap to print each element and its frequency.
+5. This approach prints frequencies in the original order using a single traversal of the array.
+
+import java.util.*;
+​
+class GfG {
+​
+    static void printFrequencies(int arr[]) {
+        
+        // LinkedHashMap preserves the order of first occurrence
+        LinkedHashMap<Integer, Integer> map
+            = new LinkedHashMap<Integer, Integer>();
+​
+        // Count frequency of each element
+        for (int i = 0; i < arr.length; i++) {
+            map.put(arr[i],
+                    map.getOrDefault(arr[i], 0) + 1);
+        }
+​
+        // Print elements in insertion order with their frequencies
+        for (Map.Entry<Integer, Integer> x :
+             map.entrySet()) {
+            System.out.println(x.getKey() + " "
+                               + x.getValue());
+        }
+    }
+​
+    public static void main(String args[]) {
+        int arr[] = { 6, 4, 6, 2, 4, 4 };
+        printFrequencies(arr);
+    }
+}
+
+Output
+6 2
+4 3
+2 1

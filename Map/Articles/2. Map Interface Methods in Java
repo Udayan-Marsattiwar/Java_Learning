@@ -1,0 +1,119 @@
+The Map interface in Java is a key component of the Java Collections Framework. It is designed for storing key-value pairs, where each key is associated with a specific value. In this article, we'll discuss several important methods in the Map interface, their usage, and their functionality.
+
+-> Methods of the Map Interface in Java
+  put(K key, V value)
+• The put method is used to add a key-value pair to a map. If the key is already present, it replaces the old value with the new one; otherwise, it inserts a new key-value pair.
+• It also returns the previous value associated with the key, or null if the key was not present.
+
+import java.util.*;
+​
+class GfG {
+    public static void main(String args[]) {
+        Map<Integer, String> map = new HashMap<>();
+​
+        map.put(100, "GfG");
+        map.put(200, "Courses");
+        map.put(150, "IDE");
+​
+        System.out.println(map);
+    }
+}
+
+Output
+{100=GfG, 150=IDE, 200=Courses}
+Note: HashMap does not maintain any order. The output order may vary each time when we run  the program .
+
+get(Object key)
+The get method retrieves the value associated with the specified key. If the key is not present, it returns null.
+    String value = map.get(100);
+    System.out.println(value); 
+Output:
+GfG
+  If you try to get a value with a key that doesn't exist:
+    String value = map.get(999);
+    System.out.println(value); 
+Output:
+null
+
+isEmpty()
+The isEmpty method checks if the map contains any key-value pairs. It returns true if the map is empty, and false otherwise.
+    boolean isEmpty = map.isEmpty();
+    System.out.println(isEmpty);
+Output:
+false
+
+remove(Object key)
+  The remove method removes the key-value pair for the specified key. It returns the value associated with the key, or null if the key does not exist.
+String removedValue = map.remove(200);
+System.out.println(removedValue); 
+System.out.println(map); 
+Output:
+Courses
+{100=GfG, 150=IDE}
+
+containsKey(Object key)
+  The containsKey method checks if a given key exists in the map. It returns true if the key is present, otherwise false.
+boolean contains = map.containsKey(100);
+System.out.println(contains); 
+Output:
+true
+
+containsValue(Object value)
+The containsValue method checks if a given value exists in the map. It returns true if the value is present, otherwise false.
+boolean containsValue = map.containsValue("IDE");
+System.out.println(containsValue); 
+Output:
+true
+
+replace(K key, V value)
+The replace method replaces the existing value for a given key with a new value. It only works if the key already exists.
+map.replace(150, "Java");
+System.out.println(map); 
+Output:
+{100=GfG, 150=Java, 200=Courses}
+
+size()
+The size method returns the number of key-value pairs in the map.
+int size = map.size();
+System.out.println(size); 
+Output:
+3
+
+keySet()
+The keySet method returns a set view of all the keys present in the map.
+Set<Integer> keys = map.keySet();
+System.out.println(keys);
+Output:
+[100, 150, 200]
+
+values()
+The values method returns a collection view of all the values in the map. Since values can be duplicated, it returns a collection, not a set.
+Collection<String> values = map.values();
+System.out.println(values);
+Output:
+[GfG, Java, Courses]
+
+entrySet()
+The entrySet method returns a set view of all the key-value mappings in the map. This is useful for traversing through a map and working with both keys and values together.
+Set<Map.Entry<Integer, String>> entries = map.entrySet();
+for (Map.Entry<Integer, String> entry : entries) {
+    System.out.println(entry.getKey() + " = " + entry.getValue());
+}
+Output:
+100 = GfG
+150 = Java
+200 = Courses
+
+getOrDefault(Object key, V defaultValue)
+The getOrDefault method returns the value associated with the key if it exists, or a default value if the key is not found.
+String defaultValue = map.getOrDefault(300, "Not Found");
+System.out.println(defaultValue); 
+Output:
+Not Found
+
+clear()
+The clear method removes all the mappings from the map, making it empty.
+map.clear();
+System.out.println(map);
+Output:
+{}

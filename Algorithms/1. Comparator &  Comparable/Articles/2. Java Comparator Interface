@@ -1,0 +1,234 @@
+The Comparator interface in Java is used to define custom sorting logic for objects. It belongs to java.util package allows sorting of objects of user-defined classes without modifying their source code. It is especially useful when:
+• We need multiple sorting strategies for a class.
+• We want to keep sorting logic separate from the class definition.
+• Comparator is a functional interface as it contains only one abstract method compare().
+
+-> Syntax
+class MyComparator implements Comparator<Type> {
+           public int compare(Type obj1, Type obj2) {
+               // comparison logic
+      }
+}
+
+• Returns negative integer if obj1 < obj2.
+• Returns 0 if obj1 == obj2.
+• Returns positive integer if obj1 > obj2.
+
+import java.util.*;
+​
+class Student {
+    int id;
+    String name;
+​
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+​
+public class ComparatorExample {
+    public static void main(String[] args) {
+​
+        ArrayList<Student> list = new ArrayList<>();
+        list.add(new Student(2, "Rahul"));
+        list.add(new Student(1, "Amit"));
+​
+        Collections.sort(list, (s1, s2) -> Integer.compare(s1.id, s2.id));
+​
+        for (Student s : list) {
+            System.out.println(s.id + " " + s.name);
+        }
+    }
+}
+
+Output
+1 Amit
+2 Rahul
+
+Explanation:
+• Creates a Student class with id and name.
+• Uses Comparator (lambda expression) to sort students by id.
+• Collections.sort() applies the custom sorting logic.
+• Output is sorted in ascending order of id.
+
+-> Methods in Comparator Interface
+• compare(T o1, T o2): Compares two objects for order.
+• equals(Object obj): Indicates whether another object is equal to this comparator.
+
+-> How Collections.sort() Works with Comparator
+  The Collections.sort() method arranges the elements of a List based on the rules defined by a Comparator.
+
+Syntax
+  public static <T> void sort(List<T> list, Comparator<? super T> c)
+The method uses the compare() function of the given Comparator to decide the order of elements. The compare() method compares two elements and returns:
+• Negative value: first element comes before second
+• Zero: both elements are equal
+• Positive value: first element comes after second
+
+Example: Sorting by Multiple Fields (Name, then Age)
+
+import java.util.*;
+​
+// Define the Student class
+class Student{
+    
+    String name;
+    Integer age;
+​
+    Student(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+​
+    public String getName() {
+        return name;
+    }
+​
+    public Integer getAge() {
+        return age;
+    }
+​
+    @Override
+    public String toString() {
+        return name + " : " + age;
+    }
+}
+​
+// Comparator for multiple fields
+class StudentComparator implements Comparator<Student>{
+    
+    public int compare(Student s1, Student s2) {
+        //String comparison using compareTo() is case-sensitive. 
+        int nameCompare = s1.getName().compareTo(s2.getName());
+        int ageCompare = s1.getAge().compareTo(s2.getAge());
+        return (nameCompare == 0) ? ageCompare : nameCompare;
+    }
+}
+​
+public class GFG{
+    
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("Ajay", 27));
+        students.add(new Student("Sneha", 23));
+        students.add(new Student("Simran", 37));
+​
+        System.out.println("Original List:");
+        for (Student s : students) {
+            System.out.println(s);
+        }
+​
+        // Sort by name, then by age
+        Collections.sort(students, new StudentComparator());
+​
+        System.out.println("\nAfter Sorting:");
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+}
+
+Output
+Original List:
+Ajay : 27
+Sneha : 23
+Simran : 37
+
+After Sorting:
+Ajay : 27
+Simran : 37
+Sneha : 23
+
+-> Explanation
+• Student class includes name and age with getter methods.
+• StudentComparator compares by name first, then by age if names are same.
+• Collections.sort() uses this comparator to order students.
+• Final list shows sorted order by both name and age fields.
+  Note: String comparison using compareTo() is case-sensitive, where uppercase letters are considered smaller than lowercase. For case-insensitive sorting, use compareToIgnoreCase() or Comparator.comparing(String::toLowerCase).
+
+-> Alternative Method: Using Comparator with Lambda
+Java 8 introduced a more simple way to write comparators using lambda expressions. We can use the method mentioned below for achieving same result:
+
+students.sort(
+
+    Comparator.comparing(Student::getName)
+
+              .thenComparing(Student::getAge)
+
+);
+
+
+import java.util.*;
+​
+// Define the Student class
+class Student {
+    String name;
+    Integer age;
+​
+    // Constructor
+    Student(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+​
+    public String getName() {
+        return name;
+    }
+​
+    public Integer getAge() {
+        return age;
+    }
+​
+    // Method to print student details
+    @Override
+    public String toString() {
+        return name + " : " + age;
+    }
+}
+​
+public class ComparatorHelperClassExample {
+    public static void main(String[] args) {
+        List<Student> students = new ArrayList<>();
+​
+        students.add(new Student("Ajay", 27));
+        students.add(new Student("Sneha", 23));
+        students.add(new Student("Simran", 37));
+​
+        // Original List
+        System.out.println("Original List:");
+​
+        // Iterating List
+        for (Student it : students) {
+            System.out.println(it);
+        }
+​
+        System.out.println();
+​
+        // Sort students by name, then by age
+        students.sort(Comparator.comparing(Student::getName).thenComparing(Student::getAge));
+​
+        // Display message after sorting
+        System.out.println("After Sorting:");
+​
+        // Iterating using enhanced for-loop after sorting ArrayList
+        for (Student it : students) {
+            System.out.println(it);
+        }
+    }
+}
+
+Output
+Original List:
+Ajay : 27
+Sneha : 23
+Simran : 37
+
+After Sorting:
+Ajay : 27
+Simran : 37
+Sneha : 23
+Explanation
+Comparator.comparing() creates comparator by name.
+.thenComparing() adds secondary comparator by age.
+students.sort() sorts list using these chained comparators.
+The code achieves multi-field sorting in one line — concise and readable.

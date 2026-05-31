@@ -1,0 +1,299 @@
+Given an array arr[] of integers of size n, for every element in the array, count the number of elements that are greater than it.
+
+Examples: 
+Input: arr[] = [4, 6, 2, 1, 8, 7] 
+Output: [3, 2, 4, 5, 0, 1]
+
+Input: arr[] = [2, 3, 4, 5, 6, 7, 8]
+Output: [6, 5, 4, 3, 2, 1, 0]
+ 
+
+Table of Content
+[Naive Approach] Using Two Loops – O(n^2) Time and O(1) Space
+[Expected Approach 1] Using Hash Map - O(n log n) Time and O(n) Space
+[Expected Approach 2] Using Sorting and Binary Search - O(n log n) Time and O(n) Space
+
+-> [Naive Approach] Using Two Loops – O(n2) Time and O(1) Space
+  For each element in the array, we compare it with every other element and count how many elements are greater than it.
+
+Since all comparisons are done directly without using extra data structures, this approach is simple but inefficient for large inputs due to its quadratic time complexity.
+
+import java.util.ArrayList;
+​
+class Solution {
+​
+    static ArrayList<Integer> cntGreaterEle(int arr[], int n)
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // For each element, count elements greater than it
+        for (int i = 0; i < n; i++) {
+            int cnt = 0;
+​
+            for (int j = 0; j < n; j++) {
+                if (arr[j] > arr[i])
+                    cnt++;
+            }
+​
+            result.add(cnt);
+        }
+​
+        return result;
+    }
+​
+    // Driver code
+    public static void main(String[] args)
+    {
+        int[] arr = {7, 9, 5, 2, 1, 3};
+        int n = arr.length;
+​
+        ArrayList<Integer> ans = cntGreaterEle(arr, n);
+​
+        // Print result
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+import java.util.ArrayList;
+​
+class Solution {
+​
+    static ArrayList<Integer> cntGreaterEle(int arr[], int n)
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // For each element, count elements greater than it
+        for (int i = 0; i < n; i++) {
+            int cnt = 0;
+​
+            for (int j = 0; j < n; j++) {
+                if (arr[j] > arr[i])
+                    cnt++;
+            }
+​
+            result.add(cnt);
+        }
+​
+        return result;
+    }
+​
+    // Driver code
+    public static void main(String[] args)
+    {
+        int[] arr = {7, 9, 5, 2, 1, 3};
+        int n = arr.length;
+​
+        ArrayList<Integer> ans = cntGreaterEle(arr, n);
+​
+        // Print result
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+
+Output
+1 0 2 4 5 3 
+
+-> [Expected Approach 1] Using Hash Map - O(n log n) Time and O(n) Space
+The main idea is to avoid comparing every element with all others.
+
+  Instead we can count the frequency of each element using a hash map and process the elements in sorted order. 
+
+By traversing the map from the largest element to the smallest, we maintain a running count of how many elements have already been processed. This running count represents the number of elements greater than the current element. The stored values are then used to directly output the result for each element in the original array.
+
+import java.util.*;
+​
+class GfG {
+​
+    public static ArrayList<Integer> cntGreaterEle(int arr[])
+    {
+        int n = arr.length;
+​
+        TreeMap<Integer, Integer> mp =
+                new TreeMap<Integer, Integer>(Collections.reverseOrder());
+​
+        // Store the frequency of the
+        // array elements
+        for (int i = 0; i < n; i++) {
+            mp.put(arr[i], mp.getOrDefault(arr[i], 0) + 1);
+        }
+​
+        // Store the sum of frequency of elements
+        // greater than the current element
+        int x = 0;
+        for (Map.Entry<Integer, Integer> e : mp.entrySet()) {
+            int temp = e.getValue();
+            mp.put(e.getKey(), x);
+            x += temp;
+        }
+​
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // Store result for each element in original array
+        for (int i = 0; i < n; i++)
+            result.add(mp.get(arr[i]));
+​
+        return result;
+    }
+​
+    public static void main(String args[])
+    {
+        int arr[] = {7, 9, 5, 2, 1, 3};
+​
+        ArrayList<Integer> ans = cntGreaterEle(arr);
+​
+        // Print result
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+import java.util.*;
+​
+class GfG {
+​
+    public static ArrayList<Integer> cntGreaterEle(int arr[])
+    {
+        int n = arr.length;
+​
+        TreeMap<Integer, Integer> mp =
+                new TreeMap<Integer, Integer>(Collections.reverseOrder());
+​
+        // Store the frequency of the
+        // array elements
+        for (int i = 0; i < n; i++) {
+            mp.put(arr[i], mp.getOrDefault(arr[i], 0) + 1);
+        }
+​
+        // Store the sum of frequency of elements
+        // greater than the current element
+        int x = 0;
+        for (Map.Entry<Integer, Integer> e : mp.entrySet()) {
+            int temp = e.getValue();
+            mp.put(e.getKey(), x);
+            x += temp;
+        }
+​
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // Store result for each element in original array
+        for (int i = 0; i < n; i++)
+            result.add(mp.get(arr[i]));
+​
+        return result;
+    }
+​
+    public static void main(String args[])
+    {
+        int arr[] = {7, 9, 5, 2, 1, 3};
+​
+        ArrayList<Integer> ans = cntGreaterEle(arr);
+​
+        // Print result
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+
+Output
+1 0 2 4 5 3 
+
+-> [Expected Approach 2] Using Sorting and Binary Search - O(n log n) Time and O(n) Space
+The idea is to determine how many elements are greater than each array element by leveraging sorting. A copy of the original array is first sorted in ascending order. In this sorted array, all elements greater than a given value appear after its last occurrence.
+  Using upper_bound, we efficiently find the index of the first element that is strictly greater than the current value. 
+Since the array is sorted, the number of elements greater than that value is simply the number of elements from this index to the end of the array, i.e., n − index.
+
+import java.util.*;
+​
+class GfG {
+​
+    static ArrayList<Integer> cntGreaterEle(int arr[], int n)
+    {
+        int[] sorted = arr.clone();
+        Arrays.sort(sorted);
+​
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // For each element, find count of elements greater than it
+        for (int i = 0; i < n; i++) {
+            int idx = upperBound(sorted, arr[i]);
+            result.add(n - idx);
+        }
+​
+        return result;
+    }
+​
+    // Custom upper_bound implementation
+    static int upperBound(int[] arr, int target)
+    {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] <= target)
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        return low;
+    }
+​
+    // Driver code
+    public static void main(String[] args)
+    {
+        int arr[] = {7, 9, 5, 2, 1, 3};
+        int n = arr.length;
+​
+        ArrayList<Integer> ans = cntGreaterEle(arr, n);
+​
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+import java.util.*;
+​
+class GfG {
+​
+    static ArrayList<Integer> cntGreaterEle(int arr[], int n)
+    {
+        int[] sorted = arr.clone();
+        Arrays.sort(sorted);
+​
+        ArrayList<Integer> result = new ArrayList<>();
+​
+        // For each element, find count of elements greater than it
+        for (int i = 0; i < n; i++) {
+            int idx = upperBound(sorted, arr[i]);
+            result.add(n - idx);
+        }
+​
+        return result;
+    }
+​
+    // Custom upper_bound implementation
+    static int upperBound(int[] arr, int target)
+    {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] <= target)
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        return low;
+    }
+​
+    // Driver code
+    public static void main(String[] args)
+    {
+        int arr[] = {7, 9, 5, 2, 1, 3};
+        int n = arr.length;
+​
+        ArrayList<Integer> ans = cntGreaterEle(arr, n);
+​
+        for (int x : ans)
+            System.out.print(x + " ");
+    }
+}
+
+Output
+1 0 2 4 5 3 

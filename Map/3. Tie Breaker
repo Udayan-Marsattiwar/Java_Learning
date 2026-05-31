@@ -1,0 +1,40 @@
+Given an array of names arr[] of candidates in an election. A candidate name in array represents a vote casted to the candidate. You need to find the candidate with maximum votes recieved in the election. It may happen that two or more candidates may have same votes, in that case you need to return the name of the candidate which comes first lexicographically in dictionary.
+
+Examples:
+
+Input: arr[] = ["Turin", "Nick", "Turin", "Nick"]
+Output: Nick
+Explanation: Both have the same 2 number of votes but Nick comes first lexicographically.
+Input: arr[] = ["John", "Shushma", "Rajnath"]
+Output: John 
+Explanation: All the three have same number of votes of 1. Lexicographically John comes first.
+Constraints
+1 <= arr.size() <= 104
+
+
+class Solution {
+    public static String TieBreak(String arr[]) {
+        // Your code here
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        for(String name:arr){
+            map.put(name, map.getOrDefault(name,0) +1);
+        }
+        
+        String winner = "";
+        int maxVotes = 0;
+        
+        for(Map.Entry<String, Integer> entry: map.entrySet()){
+            String name = entry.getKey();
+            int votes = entry.getValue();
+            
+            if(votes>maxVotes){
+                maxVotes = votes;
+                winner = name;
+            }else if(votes == maxVotes && name.compareTo(winner)<0){
+                winner = name;
+            }
+        }
+        return winner;
+    }
+}

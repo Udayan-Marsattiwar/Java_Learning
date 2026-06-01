@@ -1,0 +1,123 @@
+Arrays.fill() is a method in java.util.Arrays class which assigns a specified value to each element of an entire array or a specified range within the specified array.
+
+-> Filling an Entire Array with a Value
+Let us start with a simple example where we fill the complete array with a single value.
+
+import java.util.Arrays;
+​
+public class GFG { 
+    public static void main(String[] args) {
+      
+        // Create an array of 5 integers
+        int[] arr = new int[5];
+​
+        // Fill the entire array with the value 2
+        Arrays.fill(arr, 2);
+​
+        System.out.println("" + Arrays.toString(arr));
+    }
+}
+
+Output
+[2, 2, 2, 2, 2]
+Explanation:
+• The array is initially filled with default values (0).
+• Arrays.fill(arr, 2) replaces every element with 2.
+• Arrays.toString() is used to print the array in readable format.
+
+-> Syntax of Arrays.fill() method
+  public static void fill(int[] a, int val)
+  public static void fill(int[] a, int fromIndex, int toIndex, int val)
+
+Parameters:
+• a: Array to be filled.
+• val: Value to assign to each element of the array.
+• fromIndex: Starting index (inclusive) for filling.
+• toIndex: Ending index (exclusive) for filling.
+
+Return Type: It does not return any value, but modifies the array directly.
+
+Time Complexity:
+• O(n) : when filling the entire array (where n is array length)
+• O(toIndex − fromIndex) : when filling a specific range
+
+Exceptions:
+• IllegalArgumentException: Thrown if fromIndex > toIndex
+• ArrayIndexOutOfBoundsException: Thrown if fromIndex < 0 or toIndex > array length
+
+-> Examples of Arrays.fill() in Java
+1. Fill a Specific Range in an Array
+In this example, only a portion of the array is filled with a new value while the remaining elements stay unchanged.
+import java.util.Arrays;
+​
+public class Main {
+    public static void main(String[] args) {
+        
+      int arr[] = {2, 2, 2, 2, 2, 2, 2,};
+​
+        // Fill from index 1 to index 4
+        Arrays.fill(arr, 1, 4, 5);
+   
+        System.out.println(Arrays.toString(arr));
+    }
+}
+
+Output
+[2, 5, 5, 5, 2, 2, 2]
+Explanation:
+• Index 1 to 3 are filled with 5
+• Index 4 is excluded
+• Other elements remain unchanged
+
+2. Fill a 2D Array with a Specific Value
+Arrays.fill() works on one-dimensional arrays, so for multi-dimensional arrays, we fill each row separately.
+
+import java.util.Arrays;
+​
+public class Main {
+    public static void main(String[] args) {
+        
+      int [][]arr = new int[2][2];
+​
+        // Fill each row with 5 
+        for (int[] r : arr)
+            Arrays.fill(r, 5);
+   
+        System.out.println(Arrays.deepToString(arr));
+    }
+}
+
+Output
+[[5, 5], [5, 5]]
+Explanation:
+• Each row is a 1D array
+• Arrays.fill() is applied to every row using a for-each loop
+• Arrays.deepToString() is used for printing multi-dimensional arrays
+
+3. Fill a 3D Array with a Specific Value
+In this example, again we will use Arrays.fill() method to fill each element of a 3D array with a specific value i.e. 2. Here, we will be using Nested loops to fill each row and column in the 3D array.
+import java.util.Arrays;
+​
+class GFG {
+    public static void main(String[] args) {
+        
+      int[][][] arr = new int[2][2][2];
+​
+        // Fill each row with 2 
+        for (int[][] r : arr) {
+            for (int[] c : r) {
+                Arrays.fill(c, 2);
+            }
+        }
+​
+        System.out.println(Arrays.deepToString(arr));
+    }
+}
+
+Output
+[[[2, 2], [2, 2]], [[2, 2], [2, 2]]]
+Explanation:
+
+Each level of loop accesses deeper dimensions
+Arrays.fill() fills the innermost 1D arrays
+Works efficiently for initializing multi-dimensional arrays

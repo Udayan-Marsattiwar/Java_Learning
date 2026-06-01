@@ -1,0 +1,132 @@
+The Arrays.equals() method comes under the Arrays class in Java. It is used to check whether two arrays, whether single-dimensional or multi-dimensional array are equal or not.
+import java.util.Arrays;
+​
+public class ArraysEquals {
+    public static void main(String[] args) {
+      
+        // create different integers arrays
+        int[] arr1 = {1, 2, 3, 4};
+        int[] arr2 = {1, 2, 3, 4};
+        int[] arr3 = {1, 2, 4, 3};
+        
+        System.out.println("arr1 equals to arr2: " +
+                                Arrays.equals(arr1, arr2));
+        System.out.println("arr1 equals to arr3: " +
+                                Arrays.equals(arr1, arr3));
+    }
+}
+
+Output
+arr1 equals to arr2: true
+arr1 equals to arr3: false
+
+-> Syntax
+  public static boolean equals(int[] a, int[] a2)
+
+Another overloaded version
+  public static boolean equals(int[] a, int fromIndex, int toIndex, int[] b, int fromIndex2, int toIndex2)
+
+Parameters:
+• a-> The first int[] array to be compared.
+• a2-> The second int[] array to be compared.
+
+Return Type:
+• boolean -> Returns true if both arrays are equal, otherwise false.
+
+Note:
+  If both arrays are null, the method returns true.
+  If one array is null and the other is not, it returns false.
+
+-> Some Common Examples of Arrays.equals() Method
+Examples 1: Comparing Arrays of User-Defined Objects
+we can compare arrays of objects, such as Student, by overriding the equals() method to define equality based on object attributes.
+import java.util.Arrays;
+​
+public class ArraysEquals {
+    public static void main (String[] args) {
+      
+        Student [] arr1 = {new Student(1, "a", "MP"),
+                           new Student(2, "b", "UP"),
+                           new Student(3, "c", "Delhi")};
+        
+        Student [] arr2 = {new Student(1, "a", "MP"),
+                           new Student(2, "b", "UP"),
+                           new Student(3, "c", "Delhi")};
+        
+        Student [] arr3 = {new Student(1, "a", "MP"),
+                           new Student(2, "b", "UP"),
+                           new Student(3, "c", "Jaipur"),
+                        };
+        
+        System.out.println("arr1 equals to arr2: " +
+                                    Arrays.equals(arr1, arr2));
+        System.out.println("arr1 equals to arr3: " +
+                                    Arrays.equals(arr1, arr3));    
+    }    
+}
+​
+// class to represent a student
+class Student
+{
+    int r;
+    String n, a;
+​
+    // Constructor
+    public Student(int r, String n,
+                            String a)
+    {
+        this.r = r;
+        this.n = n;
+        this.a = a;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        
+        // typecast o to Student so that we can compare students
+        Student s = (Student) o;
+        
+        return this.r == s.r && this.n.equals(s.n)
+                                && this.a.equals(s.a);
+    }
+}
+
+Output
+arr1 equals to arr2: true
+arr1 equals to arr3: false
+
+Explanation:
+• Compares arrays of Student objects using Arrays.equals().
+• The equals() method is overridden to check roll number, name, and address.
+• arr1 and arr2 have the same students-> returns true.
+• arr1 and arr3 differ in the third student -> returns false.
+• Shows how Arrays.equals() works for object arrays when equals() is properly defined.
+
+Example 2: Comparing Multidimensional Arrays
+import java.util.Arrays;
+​
+public class ArrayEqual2 {
+    public static void main(String[] args) {
+      
+        // create array of arrays
+        int[][] arr1 = { { 0, 1 }, { 1, 0 } };
+        int[][] arr2 = { { 0, 1 }, { 1, 0 } };
+​
+        System.out.println("is arr1 equals to arr2: "
+                           + Arrays.equals(arr1, arr2));
+        System.out.println("is arr1 deepequals to arr2: "
+                           + Arrays.deepEquals(arr1, arr2));
+    }
+}
+
+Output
+is arr1 equals to arr2: false
+is arr1 deepequals to arr2: true
+
+Explanation:
+• arr1 and arr2 are 2D arrays containing the same elements.
+• Arrays.equals() performs a shallow comparison -> returns false.
+• Arrays.deepEquals() performs a deep, recursive comparison -> returns true.
+• Use Arrays.deepEquals() for multidimensional arrays to check equality correctly.
+• Note: Arrays.equals() can be used with multidimensional arrays, but it performs a shallow comparison (compares references of inner arrays). For deep comparison of contents, use Arrays.deepEquals().
+

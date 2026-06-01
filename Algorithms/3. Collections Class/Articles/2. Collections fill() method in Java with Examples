@@ -1,0 +1,108 @@
+The Collections class in Java provides several utility methods to work with collection objects such as List, Set, and Map. One such useful method is Collections.fill(), which is used to replace all elements of a list with a specified value.
+
+Example: Filling an Integer List
+import java.util.*;
+​
+public class GFG{
+    public static void main(String[] args) {
+​
+        List<Integer> list = new ArrayList<>();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+​
+        Collections.fill(list, 100);
+​
+        System.out.println(list);
+    }
+}
+
+Output
+[100, 100, 100]
+
+Explanation:
+• An ArrayList of integers is created.
+• Three elements (10, 20, 30) are added to the list.
+• Collections.fill(list, 100) replaces each element with 100.
+• The list size remains 3, but all values become 100.
+  Note: Collections.fill() throws UnsupportedOperationException if the list is immutable or does not support the set() operation.
+
+Syntax
+  public static <T> void fill(List<? super T> list, T obj)
+
+Parameter:
+• <T> : represents a generic type.
+• list: List to be filled.
+• <? super T>: allows the list to accept elements of type T or its superclasses.
+• value: Value to replace all elements
+
+Example : Filling a String List
+import java.util.*;
+​
+public class GFG{
+    
+    public static void main(String[] args) {
+​
+        List<String> names = new ArrayList<>();
+        names.add("Java");
+        names.add("Python");
+        names.add("C++");
+​
+        Collections.fill(names, "Programming");
+​
+        System.out.println(names);
+    }
+}
+
+Output
+[Programming, Programming, Programming]
+
+Explanation:
+• A List<String> is created to store programming language names.
+• Initially, the list contains "Java", "Python", and "C++".
+• Collections.fill() replaces all existing strings with "Programming".
+• The list still contains three elements, but all are identical.
+
+Example: Collections.fill() with Custom Objects
+import java.util.*;
+​
+class Student {
+    String name;
+​
+    Student(String name) {
+        this.name = name;
+    }
+​
+    public String toString() {
+        return name;
+    }
+}
+​
+public class GFG{
+    
+    public static void main(String[] args) {
+​
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("A"));
+        students.add(new Student("B"));
+​
+        Student s = new Student("Default");
+​
+        Collections.fill(students, s);
+​
+        System.out.println(students);
+    }
+}
+
+Output
+[Default, Default]
+
+Explanation:
+• A Student class is created with a name field.
+• Two different Student objects ("A" and "B") are added to the list.
+• A new Student object with name "Default" is created.
+• Collections.fill(students, s) replaces every list element reference with the same object s.
+• Both list positions now refer to the same Student object.
+
+Time Complexity: O(n), where n is the number of elements in the list, as each element is replaced once.
+Auxiliary Space: O(1)

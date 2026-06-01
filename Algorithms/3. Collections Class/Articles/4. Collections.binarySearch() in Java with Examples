@@ -1,0 +1,139 @@
+Collections.binarySearch() is a method in Java used to search for an element in a sorted List using the binary search algorithm. It returns the index of the element if found, otherwise it returns a negative value indicating the insertion point.
+• Works on a sorted list only for accurate results.
+• Supports both natural ordering and custom sorting using Comparator.
+
+Syntax
+Used for Natural Order:
+• Searches the specified key in a list sorted in ascending order
+• Elements must implement Comparable
+    public static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key)
+
+Used for Custom Order:
+• Searches the key using a custom sorting order defined by Comparator
+• The list must be sorted using the same comparator before calling this method
+    public static <T> int binarySearch(List<? extends T> list, T key, Comparator<? super T> c)
+
+Return Value
+• If the element is found -> returns its index (≥ 0)
+• If the element is not found returns:
+    -(insertion point) - 1
+• Negative value: Returned when the element is not found in the list.
+• Insertion point: The index where the element would be inserted to maintain the sorted order of the list. It also helps preserve the correct position where the element should be placed.
+
+Example: Search an int key in a list, sorted in ascending order
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+​
+public class GFG {
+    public static void main(String[] args)
+    {
+        List<Integer> al = new ArrayList<Integer>();
+        al.add(1);
+        al.add(2);
+        al.add(3);
+        al.add(10);
+        al.add(20);
+​
+        // 10 is present at index 3.
+        int index = Collections.binarySearch(al, 10);
+        System.out.println(index);
+​
+        // 13 is not present. 13 would have been inserted
+        // at position 4. So the function returns (-4-1)
+        // which is -5.
+        index = Collections.binarySearch(al, 13);
+        System.out.println(index);
+    }
+}
+
+Output
+3
+-5
+
+Example: Search an int key in a list, sorted in decending order
+import java.uti
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+​
+public class GFG {
+    public static void main(String[] args)
+    {
+        List<Integer> al = new ArrayList<Integer>();
+        al.add(100);
+        al.add(50);
+        al.add(30);
+        al.add(10);
+        al.add(2);
+​
+        // The last parameter specifies the comparator
+        // method used for sorting.
+        int index = Collections.binarySearch(
+            al, 50, Collections.reverseOrder());
+​
+        System.out.println("Found at index " + index);
+    }
+}
+
+Output
+Found at index 1
+
+Example: Search in a list of user-defined class objects
+import java.util.*;
+​
+class Binarysearch {
+    public static void main(String[] args)
+    {
+        // Create a list
+        List<Domain> l = new ArrayList<Domain>();
+        l.add(new Domain(10, "www.geeksforgeeks.org"));
+        l.add(new Domain(20, "practice.geeksforgeeks.org"));
+        l.add(new Domain(30, "code.geeksforgeeks.org"));
+        l.add(new Domain(40, "www.geeksforgeeks.org"));
+​
+        Comparator<Domain> c = new Comparator<Domain>() {
+            public int compare(Domain u1, Domain u2)
+            {
+                return u1.getId().compareTo(u2.getId());
+            }
+        };
+​
+        // Searching a domain with key value 10. To search
+        // we create an object of domain with key 10.
+        int index = Collections.binarySearch(
+            l, new Domain(10, null), c);
+        System.out.println("Found at index  " + index);
+​
+        // Searching an item with key 5
+        index = Collections.binarySearch(
+            l, new Domain(5, null), c);
+        System.out.println(index);
+    }
+}
+​
+// A user-defined class to store domains with id and url
+class Domain {
+    private int id;
+    private String url;
+​
+    // Constructor
+    public Domain(int id, String url)
+    {
+        this.id = id;
+        this.url = url;
+    }
+​
+    public Integer getId() { return Integer.valueOf(id); }
+}
+
+Output
+Found at index  0
+-1
+  Note: Before using binarySearch() with a Comparator, the list must be sorted using the same Comparator; otherwise, the result is undefined.
+
+-> Complexity Analysis
+Time Complexity
+• O(log n) for ArrayList (random access supported)
+• For LinkedList, it may degrade to O(n log n) due to sequential access overhead
+Auxiliary Space: O(1) (no extra data structures used)

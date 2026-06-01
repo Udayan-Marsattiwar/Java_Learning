@@ -1,0 +1,77 @@
+Collections.frequency() method in Java is a utility method provided by the java.util.Collections class. It is used to count how many times a specified element occurs in a given collection.
+• This method compares elements using the equals() method, so proper implementation of equals() is important, especially for custom objects.
+• Throws NullPointerException if the specified collection is null.
+
+Example:
+import java.util.*;
+public class GFG {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("code");
+        list.add("code");
+        list.add("quiz");
+        list.add("code");
+        int freq = Collections.frequency(list, "code");
+        System.out.println("The frequency of the word code is: " + freq);
+    }
+}
+
+Output
+  The frequency of the word code is: 3
+
+Explanation:
+• The list contains the word "code" three times.
+• Collections.frequency(list, "code") counts the number of occurrences of "code" in the list using the equals() method.
+
+Syntax
+  public static int frequency(Collection<?> c, Object o)
+
+Parameters:
+• c: The collection in which the frequency of the object is to be determined.
+• o: The object whose frequency is to be counted.
+
+Return Value: Returns an int representing the number of times the specified object appears in the collection.
+
+-> Using Collections.frequency() with Custom Objects
+For custom-defined objects, Collections.frequency() works only if the equals() method is properly overridden. This ensures that two objects are compared based on their content rather than their memory reference.
+
+Example: This code demonstrates how to use Collections.frequency() to count how many times a specific element appears in a list.
+import java.util.*;
+public class GFG {
+    public static void main(String[] args) {
+        ArrayList<Student> list = new ArrayList<>();
+        list.add(new Student("Ram", 19));
+        list.add(new Student("Ashok", 20));
+        list.add(new Student("Ram", 19));
+        list.add(new Student("Ashok", 19));
+​
+        int freq = Collections.frequency(list, new Student("Ram", 19));
+        System.out.println("The frequency of the Student Ram, 19 is: " + freq);
+    }
+}
+​
+class Student {
+    private String name;
+    private int age;
+​
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Student)) {
+            return false;
+        }
+        Student s = (Student) o;
+        return this.name.equals(s.name) && this.age == s.age;
+    }
+}
+
+Output
+The frequency of the Student Ram, 19 is: 2
+
+Explanation:
+• list contains two Student objects with name "Ram" and age 19.
+• equals() method is overridden to compare students based on name and age.
+• Collections.frequency() uses this logic to count matching objects and returns 2.

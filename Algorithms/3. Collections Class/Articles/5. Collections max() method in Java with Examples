@@ -1,0 +1,115 @@
+The Collections class in Java provides several utility methods to perform common operations on collection objects such as List, Set, and Map. One such useful method is Collections.max(), which is used to find the maximum element in a collection according to the natural ordering of elements or a custom comparator.
+
+Example 1: Finding Maximum Element in an Integer List
+import java.util.*;
+​
+public class GFG {
+    public static void main(String[] args) {
+​
+        List<Integer> list = Arrays.asList(10, 50, 30, 20);
+​
+        int maxValue = Collections.max(list);
+​
+        System.out.println(maxValue);
+    }
+}
+
+Output
+50
+
+Explanation:
+• A list of integers is created using Arrays.asList().
+• Collections.max(list) compares elements using natural ordering.
+• The largest value (50) is returned and stored in maxValue.
+
+Syntax
+  Collections.max(collection);
+  Collections.max(collection, comparator);
+
+Example: Finding Maximum Element in a String List
+import java.util.*;
+​
+public class GFG {
+    public static void main(String[] args) {
+​
+        List<String> languages = Arrays.asList("Java", "Python", "C", "Ruby");
+​
+        String maxString = Collections.max(languages);
+​
+        System.out.println(maxString);
+    }
+}
+
+Output
+Ruby
+
+Explanation
+• Strings are compared lexicographically (dictionary order).
+• "Ruby" is considered the maximum based on ASCII/Unicode values.
+
+Example: Using Collections.max() with Custom Comparator
+import java.util.*;
+​
+public class GFG {
+    public static void main(String[] args) {
+​
+        List<String> names = Arrays.asList("Rahul", "Amit", "Vikram");
+​
+        String longestName = Collections.max(
+                names,
+                Comparator.comparingInt(String::length)
+        );
+​
+        System.out.println(longestName);
+    }
+}
+
+Output
+Vikram
+
+Explanation
+• A custom Comparator is provided.
+• Strings are compared based on length, not alphabetical order.
+• "Vikram" is the longest string and hence the maximum.
+
+Example: Using Collections.max() with Custom Objects
+import java.util.*;
+​
+class Student {
+    String name;
+    int marks;
+​
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+​
+    public String toString() {
+        return name + " " + marks;
+    }
+}
+​
+public class GFG {
+    public static void main(String[] args) {
+​
+        List<Student> students = new ArrayList<>();
+        students.add(new Student("A", 70));
+        students.add(new Student("B", 85));
+        students.add(new Student("C", 60));
+​
+        Student topper = Collections.max(
+                students,
+                Comparator.comparingInt(s -> s.marks)
+        );
+​
+        System.out.println(topper);
+    }
+}
+
+Output
+B 85
+
+Explanation
+• A list of Student objects is created.
+• A comparator compares students based on marks.
+• The student with highest marks (B 85) is returned.

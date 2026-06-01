@@ -1,0 +1,121 @@
+The Collections.reverse() method in Java is used to reverse the order of elements in a List. It is part of the java.util.Collections class and modifies the original list directly.
+• Reverses the order of elements in a given List.
+• Works in-place, meaning it updates the original list instead of creating a new one.
+• Commonly used for changing display or processing order of data.
+
+Example: Reversing an ArrayList
+import java.util.*;
+​
+// Main class
+public class GFG {
+​
+    // main driver method
+    public static void main(String[] args)
+    {
+        // Let us create a list of strings
+        List<String> mylist = new ArrayList<String>();
+​
+        // Adding elements to the List
+        // Custom input elements
+        mylist.add("practice");
+        mylist.add("code");
+        mylist.add("quiz");
+        mylist.add("geeksforgeeks");
+​
+        // Print all elements originally
+        System.out.println("Original List : " + mylist);
+​
+        // Using reverse() method to
+        // reverse the element order of mylist
+        Collections.reverse(mylist);
+​
+        // Print all elements of list in reverse order
+        // using reverse() method
+        System.out.println("Modified List: " + mylist);
+    }
+}
+
+Output
+Original List : [practice, code, quiz, geeksforgeeks]
+Modified List: [geeksforgeeks, quiz, code, practice]
+
+Syntax
+  Collections.reverse(List<?> list)
+
+How it Works
+• It takes a List as input.
+• Reverses the order of elements inside the same list.
+• Does not return a new list; it updates the existing one.
+
+Example: Reversing a LinkedList
+import java.util.*;
+​
+// Main class
+public class GFG {
+​
+    // main driver method
+    public static void main(String[] args)
+    {
+        // Let us create a list of strings
+        List<String> mylist = new LinkedList<String>();
+​
+        // Adding elements to the List
+        // Custom input elements
+        mylist.add("practice");
+        mylist.add("code");
+        mylist.add("quiz");
+        mylist.add("geeksforgeeks");
+​
+        // Print all elements originally
+        System.out.println("Original List : " + mylist);
+​
+        // Using reverse() method to
+        // reverse the element order of mylist
+        Collections.reverse(mylist);
+​
+        // Print all elements of list in reverse order
+        // using reverse() method
+        System.out.println("Modified List: " + mylist);
+    }
+}
+
+Output
+Original List : [practice, code, quiz, geeksforgeeks]
+Modified List: [geeksforgeeks, quiz, code, practice]
+
+If we peek through the above programs then there is only a minute signature detail that we are just creating an object of LinkedList class instead of Array class as seen in example1A. For LinkedList, we just did change as shown below in the above codes:
+  In the LinkedList example, we simply replace ArrayList with LinkedList while keeping the List interface reference the same.
+
+Example : Reversing an array: Arrays class in Java doesn't have a reverse method. We can use Collections.reverse() to reverse an array also as shown below as follows:
+import java.util.*;
+​
+// Main class
+public class GFG {
+​
+    // Main driver method
+    public static void main(String[] args)
+    {
+​
+        // Creating input integer array
+        Integer arr[] = { 10, 20, 30, 40, 50 };
+​
+        // Print elements of array
+        System.out.println("Original Array : "
+                           + Arrays.toString(arr));
+​
+        // Reversing elements of array using reverse()
+        // method of Collections class and fetching as
+        // list via asList()
+        Collections.reverse(Arrays.asList(arr));
+​
+        // Print and display reverse updated array
+        System.out.println("Modified Array : "
+                           + Arrays.toString(arr));
+    }
+}
+
+Output
+Original Array : [10, 20, 30, 40, 50]
+Modified Array : [50, 40, 30, 20, 10]
+Time Complexity: O(n), where n is the number of elements in the list, as each element is swapped once.
+Auxiliary Space: O(1)

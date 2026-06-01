@@ -1,0 +1,88 @@
+The mismatch() method in Java, available in the java.util.Arrays class, is used to compare two arrays element by element. It returns the index of the first position where the elements differ, helping to quickly identify differences between arrays.
+• Returns the index of the first mismatched element between two arrays.
+• Returns -1 if both arrays are identical.
+• Useful for quickly checking equality or locating differences in arrays.
+
+import java.util.Arrays;
+​
+class Main {
+    public static void main(String[] args){
+      
+        int a[] = { 2, 7, 11, 22, 37 };
+        int b[] = { 2, 7, 19, 31, 39, 56 };
+​
+        // Return the first index at which a
+        // and b have the different element
+        int i = Arrays.mismatch(a,b);
+       
+        System.out.println("Index mismatch for arrays: " + i);
+​
+    }
+}
+
+Output
+Index mismatch for arrays: 2
+Note: If all corresponding elements match and one array is shorter, mismatch() returns the length of the smaller array.
+
+-> Syntax
+  Arrays.mismatch( a , b );
+
+Parameters: The above method accepts the following parameters:
+• a: first array name of a particular data type.
+• b: second array name of the same type.
+
+Return value:
+• -1: If both the arrays have same elements at all the corresponding positions.
+• non-negative integer: The index at which both the arrays have first unequal elements.
+
+  Note: The data type of both arrays must be the same, and this method follows zero-based indexing. 
+
+Example 1 : For Identical Arrays
+import java.util.Arrays;
+​
+class Main {
+    public static void main(String[] args) {
+​
+        // Initializing an integer arrays
+        int a[] = { 2, 7, 11, 22, 37 };
+        int b[] = { 2, 7, 11, 22, 37 };
+​
+        // Return the first index at which a
+        // and b have the different element
+        int i = Arrays.mismatch(a,b);
+​
+        System.out.println("Index mismatch for arrays: " + i);
+​
+    }
+}
+
+Output
+Index mismatch for arrays: -1
+
+Example 2: Arrays with Different Lengths
+It seems that it work with int Array only but this is not the case we can use it with different data types and with different length too as mentioned below:
+import java.util.Arrays;
+​
+class Main {
+    public static void main(String[] args) {
+​
+        // Initializing an array containing
+        // double values
+        double a[] = { 11.21, 22.31, 33.15, 44.18};
+        double b[] = { 11.21, 22.31, 33.15, 44.18};
+        double c[] = { 11.21, 22, 33, 44, 55, 66 };
+​
+        // Return the first index at which a
+        // and b have the different element
+        int i1 = Arrays.mismatch(a,b);
+        int i2 = Arrays.mismatch(a,c);
+      
+        System.out.println("Arrays are equal : " + i1);
+        System.out.println("Arrays are not equal : " + i2);
+​
+    }
+}
+
+Output
+Arrays are equal : -1
+Arrays are not equal : 1

@@ -1,0 +1,118 @@
+The Arrays.toString() method in Java, available in the java.util.Arrays class, is used to convert an array into a readable string format. It returns a string representation of all elements in the array.
+• Converts an array into a string containing all its elements.
+• For object arrays with nested arrays, it prints memory references instead of actual values.
+• For nested arrays, Arrays.deepToString() should be used to get full content representation.
+
+import java.util.Arrays;
+​
+public class ArrayToString {
+    public static void main(String[] args) {
+        
+        // create an integer array
+        int[] n = {1, 2, 3, 4};
+​
+        // print the array using 
+        // Arrays.toString()
+        System.out.println(Arrays.toString(n));
+    }
+}
+
+Output
+[1, 2, 3, 4]
+
+Syntax
+  public static String toString(int[] array)
+  public static String toString(Object[] array)
+
+Parameters: array: The array, whose string representation to return.
+
+Return Type:
+• String representation of the array's elements.
+• If the array is null, it returns the string "null".
+
+-> Examples of Arrays.toString() in Java
+Example: Using Arrays.toString() with Primitive Arrays
+When we need to print or log the contents of a primitive array, we use Arrays.toString() method that converts a primitive array into a string representation.
+  Note: char[] is a special case and can be printed directly using System.out.println() as a sequence of characters.
+
+import java.util.Arrays;
+​
+class GFG {
+    public static void main(String[] args) {
+        
+        // create different types of arrays and
+        // print their contents using Arrays.toString()
+        boolean[] arr1 = new boolean[] { true, true, false, true };
+        byte[] arr2 = new byte[] { 10, 20, 30 };
+        char[] arr3 = new char[] { 'g', 'e', 'e', 'k', 's' };
+        double[] arr4 = new double[] { 1, 2, 3, 4 };
+        float[] arr5 = new float[] { 1, 2, 3, 4 };
+        int[] arr6 = new int[] { 1, 2, 3, 4 };
+        long[] arr7 = new long[] { 1, 2, 3, 4 };
+        Object[] arr8 = new Object[] { 1, 2, 3, 4 };
+        short[] arr9 = new short[] { 1, 2, 3, 4 };
+​
+        System.out.println(Arrays.toString(arr1));
+        System.out.println(Arrays.toString(arr2));
+        System.out.println(Arrays.toString(arr3));
+        System.out.println(Arrays.toString(arr4));
+        System.out.println(Arrays.toString(arr5));
+        System.out.println(Arrays.toString(arr6));
+        System.out.println(Arrays.toString(arr7));
+        System.out.println(Arrays.toString(arr8));
+        System.out.println(Arrays.toString(arr9));
+    }
+}
+
+Output
+[true, true, false, true]
+[10, 20, 30]
+[g, e, e, k, s]
+[1.0, 2.0, 3.0, 4.0]
+[1.0, 2.0, 3.0, 4.0]
+[1, 2, 3, 4]
+[1, 2, 3, 4]
+[1, 2, 3, 4]
+[1, 2, 3, 4]
+
+Example: Using Arrays.toString() with Object Arrays
+
+import java.util.Arrays;
+​
+class Main {
+    public static void main(String[] args) {
+        
+      Student[] arr = { new Student(1, "a", "UP"),
+                        new Student(2, "b", "MP"),
+                        new Student(3, "c", "Delhi") };
+​
+        System.out.println(Arrays.toString(arr));
+    }
+}
+​
+// class to represent a student
+class Student {
+  
+    // instance variables
+    int r;
+    String n, a;
+​
+    // Constructor
+    public Student(int r, String n, String a)
+    {
+        this.r = r;
+        this.n = n;
+        this.a = a;
+    }
+​
+    // Overriding the toString() method to return 
+    // student details in a formatted string
+    @Override
+    public String toString()
+    {
+         return "Roll No: " + this.r + ", Name: " + this.n + ", Address: " + this.a;
+    }
+}
+
+Output
+[Roll No: 1, Name: a, Address: UP, Roll No: 2, Name: b, Address: MP, Roll No: 3, Name: c,

@@ -1,0 +1,50 @@
+You are given an array arr[] of n coordinates. These coordinates are objects of the class Point and contain x and y. You need to sort the array by increasing order of x, and if two x are same then sort by increasing order of y.
+
+Examples:
+
+Input: arr[] = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 0]]
+Output: (1,2) (3,4) (5,6) (7,8) (9,0)
+Explanation: Sort it in increasing order of x, and if two x are same then sort in increasing order of y. So, by following the logic we get (1,2) (3,4) (5,6) (7,8) (9,0)
+Input: arr[] = [[1, 2], [1, 9], [1, 0], [1, 1]]
+Output: (1,0) (1,1) (1,2) (1,9)
+Explanation: Sort it in increasing order of x, and if two x are same then sort in increasing order of y. Here we see that x are same for all the coordinates so we sort in increasing order of y. Hence we get (1,0) (1,1) (1,2) (1,9).
+Constraints:
+1 <= arr.length <= 103
+
+ // User function Template for Java
+
+/*
+This is what the class looks like
+class Point
+{
+    public int x;
+    public int y;
+
+    public Point(int x,int y)
+    {
+        this.x=x;
+        this.y=y;
+    }
+
+    public String toString()
+    {
+        return("("+this.x+","+this.y+") ");
+    }
+}
+*/
+class Solution {
+    public static void coordinatesSort(Point[] arr) {
+        // Your code here
+        Arrays.sort(arr, new Comparator<Point>(){
+            @Override
+            public int compare(Point p1, Point p2){
+                if(p1.x == p2.x){
+                    return Integer.compare(p1.y, p2.y);
+                }
+                return Integer.compare(p1.x, p2.x);
+            }
+        });
+
+        // Use lambda expressions to sort the array in the required way
+    }
+}

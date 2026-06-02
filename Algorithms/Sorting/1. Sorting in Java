@@ -1,0 +1,177 @@
+Sorting in Java is used to arrange elements in a specific order (ascending or descending). It can be done using simple logic or Java’s built-in methods for better efficiency and readability.
+• Can be performed using loops (manual sorting)
+• Provides built-in methods like Arrays.sort() and Collections.sort()
+• Works with arrays, lists, and other data structures
+
+-> Ways of sorting in Java
+1. Using loops
+
+class GFG {
+​
+    // Main driver method
+    public static void main(String[] args)
+    {
+​
+        // Custom input array
+        int arr[] = { 4, 3, 2, 1 };
+​
+        // Outer loop
+        for (int i = 0; i < arr.length; i++) {
+​
+            // Inner nested loop pointing 1 index ahead
+            for (int j = i + 1; j < arr.length; j++) {
+​
+                // Checking elements
+                int temp = 0;
+                if (arr[j] < arr[i]) {
+​
+                    // Swapping
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+​
+            // Printing sorted array elements
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
+
+Output
+1 2 3 4 
+
+2. Using sort() method of Arrays class  
+Arrays.sort() works for arrays which can be of primitive data type also which in turn by default sorts in ascending order.
+
+Example 1
+import java.util.Arrays;
+​
+public class GFG {
+​
+    public static void main(String[] args)
+    {
+        // Custom input array
+        int[] arr = { 13, 7, 6, 45, 21, 9, 101, 102 };
+​
+        // Calling the sort() method present
+        // inside Arrays class
+        Arrays.sort(arr);
+​
+        // Printing and display sorted array
+        System.out.printf("Modified arr[] : %s",
+                          Arrays.toString(arr));
+    }
+}
+
+Output
+Modified arr[] : [6, 7, 9, 13, 21, 45, 101, 102]
+
+Example 2: A sample Java program to sort an array in descending order using Arrays.sort().
+import java.util.Arrays;
+import java.util.Collections;
+​
+public class GFG {
+    public static void main(String[] args)
+    {
+        // Note that we have Integer here instead of
+        // int[] as Collections.reverseOrder doesn't
+        // work for primitive types.
+        Integer[] arr = { 13, 7, 6, 45, 21, 9, 2, 100 };
+​
+        // Sorts arr[] in descending order
+        Arrays.sort(arr, Collections.reverseOrder());
+​
+        System.out.printf("Modified arr[] : %s",
+                          Arrays.toString(arr));
+    }
+}
+
+Output
+Modified arr[] : [100, 45, 21, 13, 9, 7, 6, 2]
+
+3. Using sort() method of Collections class 
+Collections.sort() works for objects Collections like ArrayList and LinkedList.
+
+Example 1
+import java.util.*;
+​
+public class GFG {
+    public static void main(String[] args)
+    {
+        // Create a list of strings
+        ArrayList<String> al = new ArrayList<String>();
+        al.add("Geeks For Geeks");
+        al.add("Friends");
+        al.add("Dear");
+        al.add("Is");
+        al.add("Superb");
+​
+        /* Collections.sort method is sorting the
+        elements of ArrayList in ascending order. */
+        Collections.sort(al);
+​
+        // Let us print the sorted list
+        System.out.println("List after the use of"
+                           + " Collection.sort() :\n" + al);
+    }
+}
+
+Output
+List after the use of Collection.sort() :
+[Dear, Friends, Geeks For Geeks, Is, Superb]
+
+Example 2
+import java.util.*;
+​
+public class GFG {
+    public static void main(String[] args)
+    {
+        // Create a list of strings
+        ArrayList<String> al = new ArrayList<String>();
+        al.add("Geeks For Geeks");
+        al.add("Friends");
+        al.add("Dear");
+        al.add("Is");
+        al.add("Superb");
+​
+        /* Collections.sort method is sorting the
+        elements of ArrayList in ascending order. */
+        Collections.sort(al, Collections.reverseOrder());
+​
+        // Let us print the sorted list
+        System.out.println("List after the use of"
+                           + " Collection.sort() :\n" + al);
+    }
+}
+
+Output
+List after the use of Collection.sort() :
+[Superb, Is, Geeks For Geeks, Friends, Dear]
+
+4. Sorting only a subarray
+import java.util.Arrays;
+​
+public class GFG {
+​
+    public static void main(String[] args)
+    {
+        // Custom input array
+        int[] arr = { 13, 7, 6, 45, 21, 9, 2, 100 };
+​
+        // Sort subarray from index 1 to 4, i.e.,
+        // only sort subarray {7, 6, 45, 21} and
+        // keep other elements as it is.
+        Arrays.sort(arr, 1, 5);
+​
+        // Printing sorted array
+        System.out.printf("Modified arr[] : %s",
+                          Arrays.toString(arr));
+    }
+}
+
+Output
+Modified arr[] : [13, 6, 7, 21, 45, 9, 2, 100]
+Note:
+Java’s sort() uses Dual-Pivot QuickSort for primitives and TimSort for objects, and by default sorts in ascending order.
+Descending order can be achieved using Collections.reverseOrder(), while custom sorting can be implemented using algorithms like Quick Sort, Merge Sort, etc.

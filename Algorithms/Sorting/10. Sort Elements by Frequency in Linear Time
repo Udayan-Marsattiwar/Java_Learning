@@ -1,0 +1,92 @@
+Given an array of integers, the task is to sort the elements based on their frequency. Elements with higher frequencies should appear first. If two elements have the same frequency, they should appear in the order they first appear in the array.
+Examples:
+Input:  arr[] = {10, 5, 20, 10, 10, 5, 20}
+Output:  arr[] = {10, 10, 10, 5, 5, 20, 20}
+Explanation:
+• 10 appears 3 times, 5 appears 2 times, and 20 appears 2 times.
+• The array is sorted first by frequency in descending order and, if frequencies are the same, in the order of appearance in the original array.
+Input:  arr[] = {2, 1, 2, 1, 3}
+Output:  arr[] = {2, 2, 1, 1, 3}
+Explanation:
+• 2 appears 2 times, 1 appears 2 times, and 3 appears once.
+• The elements are sorted based on frequency, and for the elements with the same frequency, their order is maintained as in the original array.
+
+-> Solution
+In this article, we will explore two approaches to solve the problem of sorting elements based on frequency in linear time (O(N)). We will implement both approaches using a HashMap to store the frequencies and then sort elements accordingly.
+
+1. Approach 1: Simple Approach (O(N))
+The given approach sorts elements in an array based on their frequency using HashMap and frequency buckets. This method efficiently counts element occurrences and reconstructs the array based on the frequency of elements.
+
+Conceptual Breakdown
+  The main idea is to:
+• Count the frequency of each element using a HashMap.
+• Use frequency buckets (i.e., lists indexed by frequency) to store elements with the same frequency.
+• Rebuild the array by iterating through the frequency buckets in descending order.
+
+2. Approach 2: Modified Approach (O(N))
+The modified approach improves the original solution by using a slightly different method to handle the frequency list and ensuring that all elements are processed in linear time.
+Conceptual Breakdown
+The key improvement in this approach is:
+• Using a HashMap to count occurrences, similar to the original approach.
+• Using a frequency bucket list, but ensuring that each element is processed only once to avoid redundant work.
+• Marking processed elements in the HashMap (m.put(arr[i], -1)) to prevent duplicates from being inserted multiple times.
+
+
+Here’s the code implementation for the modified approach:
+import java.util.*;
+​
+public class GfG {
+    
+    public static void sortByFreq(int arr[]) {
+        // Step 1: Create a HashMap to store the frequency of elements
+        Map<Integer, Integer> m = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            m.put(arr[i], m.getOrDefault(arr[i], 0) + 1);
+        }
+        
+        // Step 2: Create a list of List of Integers for frequency buckets
+        List<List<Integer>> freq = new ArrayList<>();
+        for (int i = 0; i <= arr.length; i++) {
+            freq.add(new ArrayList<Integer>());
+        }
+        
+        // Step 3: Fill the frequency list with elements and mark processed elements
+        for (int i = 0; i < arr.length; i++) {
+            int f = m.get(arr[i]);
+            if (f != -1) {
+                freq.get(f).add(arr[i]);
+                m.put(arr[i], -1);
+            }
+        }
+        
+        // Step 4: Rebuild the array using the frequency list
+        int index = 0;
+        for (int i = arr.length; i >= 0; i--) {
+            for (int x : freq.get(i)) {
+                for (int j = 0; j < i; j++) {
+                    arr[index++] = x;
+                }
+            }
+        }
+    }
+    
+    public static void main(String args[]) {
+        int arr[] = {10, 5, 20, 10, 10, 5, 20};
+        
+        // Sort the elements by frequency
+        sortByFreq(arr);
+        
+        // Print the sorted array
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
+
+Output
+10 10 10 5 5 20 20 
+
+
+Complexity Analysis:
+Time Complexity: O(N) in both approaches, where N is the number of elements in the array. This is because we only need to traverse the array and the HashMap a few times.
+Space Complexity: O(N) in both approaches due to the additional storage required for the HashMap and ArrayList.

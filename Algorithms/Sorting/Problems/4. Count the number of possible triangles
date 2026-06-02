@@ -1,0 +1,35 @@
+Given an unsorted integer array arr[]. Find the number of triangles that can be formed with three different array elements as lengths of three sides of triangles. 
+
+A triangle with three given sides is only possible if sum of any two sides is always greater than the third side.
+
+Example 1:
+
+Input: arr[] = [3, 5, 4]
+Output: 1
+Explanation: A triangle is possible with all the elements 5, 3 and 4 (5+3>4, 5+4>3, 3+4>5)
+Input: arr[] = [6, 4, 9, 7, 8]
+Output: 10
+Explanation: There are 10 triangles possible  with the given elements like (6,4,9), (6,7,8),...
+Constraints:
+3 <= arr.size() <= 103
+1 <= arr[i] <= 103
+
+class Solution {
+    // Function to count the number of possible triangles.
+    static int findNumberOfTriangles(int arr[]) {
+        // code here
+        Arrays.sort(arr);
+        int count = 0, n=arr.length;
+        for(int k=n-1; k>=2; k--){
+            int i=0, j=k-1;
+            while(i<j){
+                if(arr[i]+arr[j]>arr[k]){
+                    count+=(j-- - i);
+                }else{
+                    i++;
+                }
+            }
+        }
+        return count;
+    }
+}

@@ -1,0 +1,21 @@
+put() inserts a key-value pair and the TreeMap reorders elements according to their natural order or specified comparator, which takes O(log n) time.
+
+Yes, the statement TreeMap<K, V> map = new TreeMap<K, V>(); is a correct syntax to create a new instance of TreeMap in Java.
+In this statement, K and V are type parameters that represent the key and value types of the map, respectively. The TreeMap class is a generic class that can be parameterized with these types, and the angle brackets `< >
+
+A TreeMap stores unique keys, overwrites duplicate keys, and prints keys in sorted (lexicographical) order.
+
+higherKey(10) returns the smallest key greater than 10, which is 20.
+
+The higherKey() method returns the smallest key strictly greater than the provided key in O(log n) time.
+
+By default, TreeMap sorts its keys in ascending order using their natural ordering unless a custom comparator is provided.
+
+The size() method in TreeMap has a time complexity of O(1). This is because the size of the TreeMap is maintained as a separate variable and is updated whenever an element is added or removed from the map. Therefore, the size can be returned in constant time without iterating through the elements of the map.
+
+map.entrySet() returns a set of key-value mappings that can be iterated to print items in ascending order since TreeMap maintains elements in ascending order.
+
+Methods like higherKey() or ceilingKey() in TreeMap are performed in O(log n) time due to the underlying Red-Black Tree structure.
+
+The lowerKey() method in TreeMap is used to return the greatest key strictly less than the given key, or null if there is no such key in the map.
+In other words, if the map contains the given key, the lowerKey() method will return the previous key that is strictly less than the given key. If the map does not contain the given key, it will return the greatest key that is strictly less than the given key. If there is no such key in the map, the method will return null.

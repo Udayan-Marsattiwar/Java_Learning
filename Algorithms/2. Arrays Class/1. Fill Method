@@ -1,0 +1,22 @@
+You are given an integer array arr[], you are also given a value k. You need to fill arr with k.
+
+Examples:
+
+Input: arr[] = [1, 2, 3, 4, 5], k = 67
+Output: 67 67 67 67 67
+Explanation: k is 67, so we fill arr with 67.
+Input: arr[] = [7], k = 99
+Output: 99
+Explanation: k is 99, so we fill arr with 99.
+Constraints:
+1 <= arr.length <= 103
+0 <= k, arri <= 106
+
+class Solution {
+    public static void fillArray(int arr[], int k) {
+        // Your code here
+        Arrays.fill(arr, k);
+        
+        // You don't need to print
+    }
+}

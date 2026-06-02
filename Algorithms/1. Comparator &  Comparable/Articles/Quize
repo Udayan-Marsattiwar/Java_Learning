@@ -1,0 +1,19 @@
+The compareTo() method in the Comparable interface is used to compare the current object with another object of the same type to determine their order.
+
+compareTo() method is contained by the comparable interface.
+
+Comparator is the interface used to define custom sorting logic for objects, unlike Comparable, which provides natural ordering within the class itself.
+
+Yes, Arrays.sort() method takes both Comparable and Comparator takes as lambda expression.
+
+Comparator.reverseOrder() is used to reverse the natural ordering of elements in a collection.
+
+The Arrays.sort() method sorts the Point array based on the x-coordinate. The lambda expression (p1, p2) -> p1.x - p2.x is used to compare the x values, and the array is sorted in ascending order of the x values.
+
+The String::compareToIgnoreCase method compares strings lexicographically while ignoring case differences. Therefore, the array is sorted in a case-insensitive manner, resulting in Courses, gfg and GFG.
+
+In order to sort ArrayList in Descending order using Comparator, we need to use the Collections. reverseOrder() method which returns a comparator which gives the reverse of the natural ordering on a collection of objects that implement the Comparable interface.
+
+The array is first sorted by the name attribute in ascending order. If two names are the same, the sorting proceeds by the rollNo attribute. Hence, the output is sorted first by name, and then by roll number.
+
+Comparator.nullsFirst() places null values at the beginning of the collection during sorting, making them the smallest.
